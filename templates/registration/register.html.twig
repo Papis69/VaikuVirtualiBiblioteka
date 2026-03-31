@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Registracija{% endblock %}
+
+{% block body %}
+<div class="auth-container">
+    <div class="auth-card">
+        <h1><i class="fas fa-user-plus"></i> Registracija</h1>
+
+        {{ form_start(registrationForm) }}
+            <div class="form-group">
+                {{ form_label(registrationForm.username) }}
+                {{ form_widget(registrationForm.username, {'attr': {'class': 'form-control', 'placeholder': 'Jūsų vardas'}}) }}
+                {{ form_errors(registrationForm.username) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(registrationForm.email) }}
+                {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control', 'placeholder': 'jusu@pastas.lt'}}) }}
+                {{ form_errors(registrationForm.email) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(registrationForm.plainPassword.first) }}
+                {{ form_widget(registrationForm.plainPassword.first, {'attr': {'class': 'form-control', 'placeholder': '••••••'}}) }}
+                {{ form_errors(registrationForm.plainPassword.first) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(registrationForm.plainPassword.second) }}
+                {{ form_widget(registrationForm.plainPassword.second, {'attr': {'class': 'form-control', 'placeholder': '••••••'}}) }}
+                {{ form_errors(registrationForm.plainPassword.second) }}
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block btn-lg">
+                <i class="fas fa-user-plus"></i> Registruotis
+            </button>
+        {{ form_end(registrationForm) }}
+
+        <p class="auth-link">Jau turite paskyrą? <a href="{{ path('app_login') }}">Prisijungti</a></p>
+    </div>
+</div>
+{% endblock %}

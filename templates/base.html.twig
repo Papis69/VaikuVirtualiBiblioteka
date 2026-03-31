@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Vaikų Virtuali Biblioteka{% endblock %}</title>
+    <meta name="description" content="Virtuali biblioteka vaikams – skaityk knygas, atlik misijas, rink taškus ir laimėk prizus!">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+</head>
+<body>
+    <header class="main-header">
+        <div class="container header-inner">
+            <a href="{{ path('app_home') }}" class="logo">
+                <i class="fas fa-book-open"></i>
+                <span>Vaikų Biblioteka</span>
+            </a>
+            <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav class="nav-links">
+                <a href="{{ path('app_home') }}"><i class="fas fa-home"></i> Pradžia</a>
+                <a href="{{ path('app_books') }}"><i class="fas fa-book"></i> Knygos</a>
+                <a href="{{ path('app_missions') }}"><i class="fas fa-flag"></i> Misijos</a>
+                <a href="{{ path('app_rewards') }}"><i class="fas fa-gift"></i> Prizai</a>
+                {% if app.user %}
+                    <a href="{{ path('app_profile') }}"><i class="fas fa-user"></i> Profilis</a>
+                    <span class="points-badge"><i class="fas fa-star"></i> {{ app.user.points }} tšk.</span>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('admin_dashboard') }}" class="admin-link"><i class="fas fa-cog"></i> Admin</a>
+                    {% endif %}
+                    <a href="{{ path('app_logout') }}" class="btn btn-sm btn-outline">Atsijungti</a>
+                {% else %}
+                    <a href="{{ path('app_login') }}" class="btn btn-sm btn-primary">Prisijungti</a>
+                    <a href="{{ path('app_register') }}" class="btn btn-sm btn-secondary">Registruotis</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ label }}">
+                        {{ message }}
+                        <button class="alert-close" onclick="this.parentElement.remove()">&times;</button>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+
+            {% block body %}{% endblock %}
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container footer-inner">
+            <div class="footer-col">
+                <h4><i class="fas fa-book-open"></i> Vaikų Biblioteka</h4>
+                <p>Virtuali biblioteka, skatinanti vaikus skaityti ir mokytis žaidžiant!</p>
+            </div>
+            <div class="footer-col">
+                <h4>Nuorodos</h4>
+                <ul>
+                    <li><a href="{{ path('app_home') }}">Pradžia</a></li>
+                    <li><a href="{{ path('app_books') }}">Knygos</a></li>
+                    <li><a href="{{ path('app_missions') }}">Misijos</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Informacija</h4>
+                <ul>
+                    <li><a href="#">Apie mus</a></li>
+                    <li><a href="#">Kontaktai</a></li>
+                    <li><a href="#">Privatumo politika</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; {{ "now"|date("Y") }} Vaikų Virtuali Biblioteka. Visos teisės saugomos.</p>
+        </div>
+    </footer>
+
+    <script src="{{ asset('js/app.js') }}"></script>
+</body>
+</html>

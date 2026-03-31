@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mano profilis{% endblock %}
+
+{% block body %}
+<section class="section">
+    <h1 class="page-title"><i class="fas fa-user"></i> Mano profilis</h1>
+
+    <div class="profile-grid">
+        <div class="profile-card">
+            <div class="profile-avatar">
+                <i class="fas fa-user-circle fa-5x"></i>
+            </div>
+            <h2>{{ user.username }}</h2>
+            <p class="profile-email"><i class="fas fa-envelope"></i> {{ user.email }}</p>
+            <p class="profile-date"><i class="fas fa-calendar"></i> Registracija: {{ user.createdAt|date('Y-m-d') }}</p>
+            <div class="profile-points">
+                <i class="fas fa-star"></i> <span>{{ user.points }}</span> taškų
+            </div>
+        </div>
+
+        <div class="profile-section">
+            <h3><i class="fas fa-medal"></i> Mano ženkliukai ({{ user.userBadges|length }})</h3>
+            {% if user.userBadges|length > 0 %}
+                <div class="badges-grid">
+                    {% for ub in user.userBadges %}
+                    <div class="badge-item">
+                        <div class="badge-icon">{{ ub.badge.icon ?? '🏅' }}</div>
+                        <span>{{ ub.badge.name }}</span>
+                        <small>{{ ub.awardedAt|date('Y-m-d') }}</small>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="empty-state">Ženkliukų dar neturite. Atlikite misijas!</p>
+            {% endif %}
+        </div>
+
+        <div class="profile-section">
+            <h3><i class="fas fa-tasks"></i> Mano misijos ({{ user.userMissions|length }})</h3>
+            {% if user.userMissions|length > 0 %}
+                <ul class="profile-list">
+                    {% for um in user.userMissions %}
+                    <li>
+                        {% if um.approved %}
+                            <i class="fas fa-check-circle text-success"></i>
+                        {% elseif um.pending %}
+                            <i class="fas fa-hourglass-half text-warning"></i>
+                        {% elseif um.rejected %}
+                            <i class="fas fa-times-circle" style="color: var(--danger);"></i>
+                        {% endif %}
+                        {{ um.mission.title }}
+                        <span class="list-meta">
+                            {% if um.approved %}
+                                <span class="badge badge-success" style="font-size: 0.75rem;">Patvirtinta</span>
+                                +{{ um.mission.rewardPoints }} tšk. | {{ um.completedAt|date('Y-m-d') }}
+                            {% elseif um.pending %}
+                                <span class="badge badge-warning" style="font-size: 0.75rem;">Laukia</span>
+                            {% elseif um.rejected %}
+                                <span class="badge badge-danger" style="font-size: 0.75rem;">Atmesta</span>
+                                {% if um.rejectionReason %}
+                                    — {{ um.rejectionReason }}
+                                {% endif %}
+                            {% endif %}
+                        </span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="empty-state">Misijų dar neatlikote.</p>
+            {% endif %}
+        </div>
+
+        <div class="profile-section">
+            <h3><i class="fas fa-gift"></i> Įsigyti prizai ({{ user.userRewards|length }})</h3>
+            {% if user.userRewards|length > 0 %}
+                <ul class="profile-list">
+                    {% for ur in user.userRewards %}
+                    <li>
+                        <i class="fas fa-gift text-primary"></i>
+                        {{ ur.reward.name }}
+                        <span class="list-meta">{{ ur.claimedAt|date('Y-m-d') }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="empty-state">Prizų dar neįsigijote.</p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

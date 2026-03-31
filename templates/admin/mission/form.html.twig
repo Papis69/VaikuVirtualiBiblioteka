@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+<section class="section">
+    <a href="{{ path('admin_missions') }}" class="btn btn-outline btn-sm mb-1"><i class="fas fa-arrow-left"></i> Grįžti</a>
+    <h1 class="page-title">{{ title }}</h1>
+
+    <div class="form-card">
+        {{ form_start(form) }}
+            <div class="form-group">{{ form_label(form.title) }}{{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}{{ form_errors(form.title) }}</div>
+            <div class="form-group">{{ form_label(form.description) }}{{ form_widget(form.description, {'attr': {'class': 'form-control', 'rows': 4}}) }}{{ form_errors(form.description) }}</div>
+            <div class="form-group">{{ form_label(form.rewardPoints) }}{{ form_widget(form.rewardPoints, {'attr': {'class': 'form-control'}}) }}{{ form_errors(form.rewardPoints) }}</div>
+            <div class="form-group">{{ form_label(form.type) }}{{ form_widget(form.type, {'attr': {'class': 'form-control'}}) }}{{ form_errors(form.type) }}</div>
+            <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-save"></i> Išsaugoti</button>
+        {{ form_end(form) }}
+    </div>
+</section>
+{% endblock %}

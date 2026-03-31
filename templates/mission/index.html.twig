@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Misijos{% endblock %}
+
+{% block body %}
+<section class="section">
+    <h1 class="page-title"><i class="fas fa-flag"></i> Misijos</h1>
+    <p class="section-subtitle">Atlik misijas, kaupk taškus ir gauk ženkliukus!</p>
+
+    <div class="card-grid">
+        {% for mission in missions %}
+        <div class="card mission-card {{ mission.id in completedMissionIds ? 'completed' : '' }} {{ mission.id in pendingMissionIds ? 'pending' : '' }} {{ mission.id in rejectedMissionIds ? 'rejected' : '' }}">
+            <div class="card-body">
+                <div class="mission-status">
+                    {% if mission.id in completedMissionIds %}
+                        <span class="badge badge-success"><i class="fas fa-check-circle"></i> Patvirtinta</span>
+                    {% elseif mission.id in pendingMissionIds %}
+                        <span class="badge badge-warning"><i class="fas fa-hourglass-half"></i> Laukia patvirtinimo</span>
+                    {% elseif mission.id in rejectedMissionIds %}
+                        <span class="badge badge-danger"><i class="fas fa-times-circle"></i> Atmesta</span>
+                    {% else %}
+                        <span class="badge badge-pending"><i class="fas fa-hourglass-half"></i> Neatlikta</span>
+                    {% endif %}
+                </div>
+                <h3><i class="fas fa-bullseye"></i> {{ mission.title }}</h3>
+                <p>{{ mission.description }}</p>
+                {% if mission.type %}
+                    <span class="tag"><i class="fas fa-tag"></i> {{ mission.type }}</span>
+                {% endif %}
+                <div class="mission-reward">
+                    <i class="fas fa-coins"></i> {{ mission.rewardPoints }} taškų
+                </div>
+
+                {% if mission.id in rejectedMissionIds %}
+                    {% if rejectedReasons[mission.id] is defined and rejectedReasons[mission.id] %}
+                        <div class="alert alert-danger mb-1" style="margin-top: 8px; padding: 10px 14px; font-size: 0.9rem;">
+                            <span><i class="fas fa-info-circle"></i> Priežastis: {{ rejectedReasons[mission.id] }}</span>
+                        </div>
+                    {% endif %}
+                    <a href="{{ path('app_mission_submit_proof', {id: mission.id}) }}" class="btn btn-secondary btn-block">
+                        <i class="fas fa-redo"></i> Pateikti iš naujo
+                    </a>
+                {% elseif app.user and mission.id not in completedMissionIds and mission.id not in pendingMissionIds %}
+                    <a href="{{ path('app_mission_submit_proof', {id: mission.id}) }}" class="btn btn-primary btn-block">
+                        <i class="fas fa-paper-plane"></i> Atlikti misiją
+                    </a>
+                {% elseif mission.id in pendingMissionIds %}
+                    <div class="pending-info">
+                        <i class="fas fa-clock"></i> Jūsų įrodymas peržiūrimas...
+                    </div>
+                {% elseif not app.user %}
+                    <a href="{{ path('app_login') }}" class="btn btn-outline btn-block">
+                        <i class="fas fa-sign-in-alt"></i> Prisijunkite, kad atliktumėte
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+        {% else %}
+            <p class="empty-state"><i class="fas fa-inbox"></i> Misijų dar nėra.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

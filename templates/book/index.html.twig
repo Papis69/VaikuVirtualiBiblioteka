@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Knygų katalogas{% endblock %}
+
+{% block body %}
+<section class="section">
+    <h1 class="page-title"><i class="fas fa-book"></i> Knygų katalogas</h1>
+
+    <div class="filter-bar">
+        <form method="get" action="{{ path('app_books') }}" class="filter-form">
+            <div class="filter-group">
+                <input type="text" name="q" value="{{ search }}" class="form-control" placeholder="Ieškoti pagal pavadinimą ar autorių...">
+            </div>
+            <div class="filter-group">
+                <select name="category" class="form-control">
+                    <option value="">Visos kategorijos</option>
+                    {% for cat in categories %}
+                        <option value="{{ cat.id }}" {{ selectedCategory == cat.id ? 'selected' : '' }}>{{ cat.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="filter-group">
+                <select name="age" class="form-control">
+                    <option value="">Visi amžiai</option>
+                    {% for a in 3..16 %}
+                        <option value="{{ a }}" {{ selectedAge == a ? 'selected' : '' }}>{{ a }} metų</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Ieškoti</button>
+        </form>
+    </div>
+
+    <div class="card-grid">
+        {% for book in books %}
+        <div class="card book-card">
+            <div class="card-image" style="background-color: {{ book.category ? book.category.color : '#6C63FF' }}">
+                {% if book.coverImage %}
+                    <img src="{{ book.coverImage }}" alt="{{ book.title }}">
+                {% else %}
+                    <i class="fas fa-book fa-3x"></i>
+                {% endif %}
+            </div>
+            <div class="card-body">
+                <h3>{{ book.title }}</h3>
+                <p class="card-meta"><i class="fas fa-user-edit"></i> {{ book.author }}</p>
+                {% if book.minAge and book.maxAge %}
+                    <span class="age-badge"><i class="fas fa-child"></i> {{ book.minAge }}–{{ book.maxAge }} m.</span>
+                {% endif %}
+                {% if book.category %}
+                    <span class="tag" style="background-color: {{ book.category.color }}">{{ book.category.name }}</span>
+                {% endif %}
+                <a href="{{ path('app_book_show', {id: book.id}) }}" class="btn btn-primary btn-block">Skaityti daugiau</a>
+            </div>
+        </div>
+        {% else %}
+            <p class="empty-state"><i class="fas fa-search"></i> Knygų pagal pasirinktus filtrus nerasta.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

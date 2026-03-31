@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ book.title }} – Knygos{% endblock %}
+
+{% block body %}
+<section class="section">
+    <a href="{{ path('app_books') }}" class="btn btn-outline btn-sm mb-1"><i class="fas fa-arrow-left"></i> Grįžti į katalogą</a>
+
+    <div class="book-detail">
+        <div class="book-detail-image" style="background-color: {{ book.category ? book.category.color : '#6C63FF' }}">
+            {% if book.coverImage %}
+                <img src="{{ book.coverImage }}" alt="{{ book.title }}">
+            {% else %}
+                <i class="fas fa-book fa-5x"></i>
+            {% endif %}
+        </div>
+        <div class="book-detail-info">
+            <h1>{{ book.title }}</h1>
+            <p class="book-author"><i class="fas fa-user-edit"></i> {{ book.author }}</p>
+
+            {% if book.category %}
+                <span class="tag" style="background-color: {{ book.category.color }}">{{ book.category.name }}</span>
+            {% endif %}
+
+            {% if book.minAge and book.maxAge %}
+                <span class="age-badge"><i class="fas fa-child"></i> Amžius: {{ book.minAge }}–{{ book.maxAge }} m.</span>
+            {% endif %}
+
+            {% if book.description %}
+                <div class="book-description">
+                    <h3>Aprašymas</h3>
+                    <p>{{ book.description|nl2br }}</p>
+                </div>
+            {% endif %}
+
+            {% if book.contentUrl %}
+                <a href="{{ book.contentUrl }}" target="_blank" class="btn btn-primary btn-lg">
+                    <i class="fas fa-play-circle"></i> Atidaryti turinį (PDF / Audio)
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

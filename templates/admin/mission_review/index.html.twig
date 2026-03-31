@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Misijų peržiūra{% endblock %}
+
+{% block body %}
+<section class="section">
+    <div class="section-header">
+        <h1 class="page-title"><i class="fas fa-clipboard-check"></i> Misijų peržiūra</h1>
+        <a href="{{ path('admin_dashboard') }}" class="btn btn-outline">
+            <i class="fas fa-arrow-left"></i> Grįžti į admin
+        </a>
+    </div>
+
+    {% if pendingMissions|length > 0 %}
+        <p class="section-subtitle">
+            <i class="fas fa-hourglass-half"></i> Laukia patvirtinimo: <strong>{{ pendingMissions|length }}</strong> {{ pendingMissions|length == 1 ? 'misija' : 'misijos' }}
+        </p>
+
+        <div class="review-cards">
+            {% for um in pendingMissions %}
+            <div class="card review-card">
+                <div class="card-body">
+                    <div class="review-header">
+                        <div class="review-user">
+                            <i class="fas fa-user-circle fa-2x"></i>
+                            <div>
+                                <strong>{{ um.user.username }}</strong>
+                                <small>{{ um.user.email }}</small>
+                            </div>
+                        </div>
+                        <div class="review-date">
+                            <i class="fas fa-clock"></i> {{ um.completedAt|date('Y-m-d H:i') }}
+                        </div>
+                    </div>
+
+                    <div class="review-mission">
+                        <h3><i class="fas fa-bullseye"></i> {{ um.mission.title }}</h3>
+                        <span class="mission-reward"><i class="fas fa-coins"></i> {{ um.mission.rewardPoints }} taškų</span>
+                        {% if um.mission.type %}
+                            <span class="tag" style="background: var(--primary);"><i class="fas fa-tag"></i> {{ um.mission.type }}</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="review-proof">
+                        <h4><i class="fas fa-file-alt"></i> Naudotojo įrodymas:</h4>
+                        <blockquote class="proof-text">
+                            {{ um.proofText }}
+                        </blockquote>
+                    </div>
+
+                    <div class="review-actions">
+                        <form method="post" action="{{ path('admin_mission_approve', {id: um.id}) }}" style="display: inline;">
+                            <button type="submit" class="btn btn-success"
+                                    onclick="return confirm('Ar tikrai norite patvirtinti šią misiją?')">
+                                <i class="fas fa-check"></i> Patvirtinti
+                            </button>
+                        </form>
+
+                        <form method="post" action="{{ path('admin_mission_reject', {id: um.id}) }}" class="reject-form">
+                            <div class="reject-input-group">
+                                <input type="text" name="rejection_reason" class="form-control"
+                                       placeholder="Atmetimo priežastis (neprivaloma)..."
+                                       style="flex: 1; padding: 8px 12px; font-size: 0.9rem;">
+                                <button type="submit" class="btn btn-danger"
+                                        onclick="return confirm('Ar tikrai norite atmesti šią misiją?')">
+                                    <i class="fas fa-times"></i> Atmesti
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <i class="fas fa-check-circle fa-3x" style="color: var(--success); margin-bottom: 15px; display: block;"></i>
+            <p>Viskas peržiūrėta! Laukiančių misijų nėra.</p>
+        </div>
+    {% endif %}
+</section>
+{% endblock %}

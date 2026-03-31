@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Atlikti misiją — {{ mission.title }}{% endblock %}
+
+{% block body %}
+<section class="section">
+    <h1 class="page-title"><i class="fas fa-paper-plane"></i> Pateikti įrodymą</h1>
+
+    <div class="proof-layout">
+        <div class="proof-mission-info">
+            <div class="card">
+                <div class="card-body">
+                    <h3><i class="fas fa-bullseye"></i> {{ mission.title }}</h3>
+                    <p>{{ mission.description }}</p>
+                    {% if mission.type %}
+                        <span class="tag" style="background: var(--primary);"><i class="fas fa-tag"></i> {{ mission.type }}</span>
+                    {% endif %}
+                    <div class="mission-reward">
+                        <i class="fas fa-coins"></i> {{ mission.rewardPoints }} taškų
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="proof-form-container">
+            <div class="form-card">
+                <h2><i class="fas fa-pencil-alt"></i> Aprašykite, ką padarėte</h2>
+                <p class="section-subtitle">Parašykite, kaip atlikote šią misiją. Administratorius peržiūrės jūsų įrodymą.</p>
+
+                <form method="post" action="{{ path('app_mission_submit_proof', {id: mission.id}) }}">
+                    <div class="form-group">
+                        <label for="proof_text"><i class="fas fa-edit"></i> Jūsų įrodymas</label>
+                        <textarea
+                            id="proof_text"
+                            name="proof_text"
+                            class="form-control"
+                            rows="6"
+                            placeholder="Pvz.: Perskaičiau knygą „Raudonkepuraitė". Labiausiai patiko scena, kai..."
+                            required
+                        ></textarea>
+                    </div>
+
+                    <div class="proof-tips">
+                        <h4><i class="fas fa-lightbulb"></i> Patarimai</h4>
+                        <ul>
+                            <li>Parašykite konkrečiai, ką padarėte</li>
+                            <li>Jei skaitėte knygą — nurodykite pavadinimą</li>
+                            <li>Papasakokite, kas labiausiai patiko</li>
+                        </ul>
+                    </div>
+
+                    <div class="proof-actions">
+                        <a href="{{ path('app_missions') }}" class="btn btn-outline">
+                            <i class="fas fa-arrow-left"></i> Atgal
+                        </a>
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fas fa-paper-plane"></i> Pateikti įrodymą
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

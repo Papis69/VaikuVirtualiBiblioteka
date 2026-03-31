@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Administravimas{% endblock %}
+
+{% block body %}
+<section class="section">
+    <h1 class="page-title"><i class="fas fa-cog"></i> Administravimo skydelis</h1>
+
+    <div class="admin-nav-grid">
+        <a href="{{ path('admin_books') }}" class="admin-nav-card">
+            <i class="fas fa-book fa-2x"></i>
+            <h3>Knygos</h3>
+            <p>Valdyti knygų katalogą</p>
+        </a>
+        <a href="{{ path('admin_missions') }}" class="admin-nav-card">
+            <i class="fas fa-flag fa-2x"></i>
+            <h3>Misijos</h3>
+            <p>Valdyti misijas</p>
+        </a>
+        <a href="{{ path('admin_rewards') }}" class="admin-nav-card">
+            <i class="fas fa-gift fa-2x"></i>
+            <h3>Prizai</h3>
+            <p>Valdyti prizus</p>
+        </a>
+        <a href="{{ path('admin_mission_review') }}" class="admin-nav-card review-card-link">
+            <i class="fas fa-clipboard-check fa-2x"></i>
+            <h3>Misijų peržiūra</h3>
+            <p>Peržiūrėti pateiktus įrodymus</p>
+            {% if pendingCount > 0 %}
+                <span class="pending-count-badge">{{ pendingCount }}</span>
+            {% endif %}
+        </a>
+    </div>
+
+    <h2 class="section-title mt-2"><i class="fas fa-users"></i> Vartotojų sąrašas</h2>
+    <div class="table-responsive">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Vardas</th>
+                    <th>El. paštas</th>
+                    <th>Rolės</th>
+                    <th>Taškai</th>
+                    <th>Registracija</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for u in users %}
+                <tr>
+                    <td>{{ u.id }}</td>
+                    <td>{{ u.username }}</td>
+                    <td>{{ u.email }}</td>
+                    <td>{{ u.roles|join(', ') }}</td>
+                    <td><i class="fas fa-star text-warning"></i> {{ u.points }}</td>
+                    <td>{{ u.createdAt|date('Y-m-d') }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pradžia – Vaikų Virtuali Biblioteka{% endblock %}
+
+{% block body %}
+<section class="hero">
+    <div class="hero-content">
+        <h1><i class="fas fa-rocket"></i> Sveiki atvykę į Vaikų Virtualią Biblioteką!</h1>
+        <p>Skaityk knygas, atlik misijas, rink taškus ir laimėk nuostabius prizus!</p>
+        <div class="hero-buttons">
+            <a href="{{ path('app_books') }}" class="btn btn-primary btn-lg"><i class="fas fa-book"></i> Naršyti knygas</a>
+            <a href="{{ path('app_missions') }}" class="btn btn-secondary btn-lg"><i class="fas fa-flag"></i> Misijos</a>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title"><i class="fas fa-star"></i> Naujausios knygos</h2>
+    <div class="card-grid">
+        {% for book in latestBooks %}
+        <div class="card book-card">
+            <div class="card-image" style="background-color: {{ book.category ? book.category.color : '#6C63FF' }}">
+                {% if book.coverImage %}
+                    <img src="{{ book.coverImage }}" alt="{{ book.title }}">
+                {% else %}
+                    <i class="fas fa-book fa-3x"></i>
+                {% endif %}
+            </div>
+            <div class="card-body">
+                <h3>{{ book.title }}</h3>
+                <p class="card-meta"><i class="fas fa-user-edit"></i> {{ book.author }}</p>
+                {% if book.category %}
+                    <span class="tag" style="background-color: {{ book.category.color }}">{{ book.category.name }}</span>
+                {% endif %}
+                <a href="{{ path('app_book_show', {id: book.id}) }}" class="btn btn-primary btn-block">Skaityti daugiau</a>
+            </div>
+        </div>
+        {% else %}
+            <p class="empty-state"><i class="fas fa-inbox"></i> Knygų dar nėra.</p>
+        {% endfor %}
+    </div>
+</section>
+
+{% if missions|length > 0 %}
+<section class="section">
+    <h2 class="section-title"><i class="fas fa-flag"></i> Populiarios misijos</h2>
+    <div class="card-grid">
+        {% for mission in missions %}
+        <div class="card mission-card">
+            <div class="card-body">
+                <h3><i class="fas fa-bullseye"></i> {{ mission.title }}</h3>
+                <p>{{ mission.description|length > 100 ? mission.description|slice(0,100) ~ '...' : mission.description }}</p>
+                <div class="mission-reward">
+                    <i class="fas fa-coins"></i> {{ mission.rewardPoints }} taškų
+                </div>
+                <a href="{{ path('app_missions') }}" class="btn btn-secondary btn-block">Peržiūrėti</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+<section class="section features-section">
+    <h2 class="section-title"><i class="fas fa-magic"></i> Kaip tai veikia?</h2>
+    <div class="features-grid">
+        <div class="feature-item">
+            <div class="feature-icon"><i class="fas fa-book-reader"></i></div>
+            <h3>Skaityk knygas</h3>
+            <p>Rinkis iš daugybės knygų ir atrask naujas istorijas!</p>
+        </div>
+        <div class="feature-item">
+            <div class="feature-icon"><i class="fas fa-tasks"></i></div>
+            <h3>Atlik misijas</h3>
+            <p>Vykdyk skaitymo misijas ir kaupk taškus!</p>
+        </div>
+        <div class="feature-item">
+            <div class="feature-icon"><i class="fas fa-medal"></i></div>
+            <h3>Rink ženkliukus</h3>
+            <p>Gauk ženkliukus už savo pasiekimus!</p>
+        </div>
+        <div class="feature-item">
+            <div class="feature-icon"><i class="fas fa-gift"></i></div>
+            <h3>Laimėk prizus</h3>
+            <p>Iškeisk sukauptus taškus į nuostabius prizus!</p>
+        </div>
+    </div>
+</section>
+{% endblock %}
