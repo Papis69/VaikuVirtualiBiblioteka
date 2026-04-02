@@ -1,40 +1,51 @@
+{# Paveldime bazinį šabloną #}
 {% extends 'base.html.twig' %}
 
 {% block title %}Prisijungimas{% endblock %}
 
 {% block body %}
+{# Centruotas autentifikacijos konteineris #}
 <div class="auth-container">
     <div class="auth-card">
         <h1><i class="fas fa-sign-in-alt"></i> Prisijungimas</h1>
 
+        {# Klaidos pranešimas (jei buvo neteisingas slaptažodis) #}
         {% if error %}
             <div class="alert alert-danger">
                 {{ error.messageKey|trans(error.messageData, 'security') }}
             </div>
         {% endif %}
 
+        {# Prisijungimo forma – POST metodas #}
         <form method="post" action="{{ path('app_login') }}">
+            {# El. pašto laukas #}
             <div class="form-group">
                 <label for="inputEmail"><i class="fas fa-envelope"></i> El. paštas</label>
+                {# value="{{ last_username }}" – iš anksto užpildo paskutinį įvestą el. paštą #}
                 <input type="email" id="inputEmail" name="_username" value="{{ last_username }}" class="form-control" required autofocus placeholder="jusu@pastas.lt">
             </div>
+            {# Slaptažodžio laukas #}
             <div class="form-group">
                 <label for="inputPassword"><i class="fas fa-lock"></i> Slaptažodis</label>
                 <input type="password" id="inputPassword" name="_password" class="form-control" required placeholder="••••••">
             </div>
+            {# CSRF apsaugos žetonas (saugumo priemonė prieš kryžminius užklausų klastojimus) #}
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
+            {# „Prisiminti mane" varnelė #}
             <div class="form-group">
                 <label class="checkbox-label">
                     <input type="checkbox" name="_remember_me"> Prisiminti mane
                 </label>
             </div>
 
+            {# Prisijungimo mygtukas #}
             <button type="submit" class="btn btn-primary btn-block btn-lg">
                 <i class="fas fa-sign-in-alt"></i> Prisijungti
             </button>
         </form>
 
+        {# Nuoroda į registracijos puslapį #}
         <p class="auth-link">Neturite paskyros? <a href="{{ path('app_register') }}">Registruotis</a></p>
     </div>
 </div>

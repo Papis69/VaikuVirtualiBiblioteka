@@ -1,9 +1,11 @@
+{# Paveldime bazinį šabloną #}
 {% extends 'base.html.twig' %}
 
 {% block title %}Misijų peržiūra{% endblock %}
 
 {% block body %}
 <section class="section">
+    {# Antraštė su grįžimo mygtuku #}
     <div class="section-header">
         <h1 class="page-title"><i class="fas fa-clipboard-check"></i> Misijų peržiūra</h1>
         <a href="{{ path('admin_dashboard') }}" class="btn btn-outline">
@@ -11,15 +13,19 @@
         </a>
     </div>
 
+    {# Jei yra laukiančių misijų – rodome jas #}
     {% if pendingMissions|length > 0 %}
+        {# Kiek laukia patvirtinimo #}
         <p class="section-subtitle">
             <i class="fas fa-hourglass-half"></i> Laukia patvirtinimo: <strong>{{ pendingMissions|length }}</strong> {{ pendingMissions|length == 1 ? 'misija' : 'misijos' }}
         </p>
 
+        {# === PERŽIŪROS KORTELIŲ SĄRAŠAS === #}
         <div class="review-cards">
             {% for um in pendingMissions %}
             <div class="card review-card">
                 <div class="card-body">
+                    {# --- Vartotojo informacija ir data --- #}
                     <div class="review-header">
                         <div class="review-user">
                             <i class="fas fa-user-circle fa-2x"></i>
@@ -28,11 +34,13 @@
                                 <small>{{ um.user.email }}</small>
                             </div>
                         </div>
+                        {# Pateikimo data #}
                         <div class="review-date">
                             <i class="fas fa-clock"></i> {{ um.completedAt|date('Y-m-d H:i') }}
                         </div>
                     </div>
 
+                    {# --- Misijos informacija --- #}
                     <div class="review-mission">
                         <h3><i class="fas fa-bullseye"></i> {{ um.mission.title }}</h3>
                         <span class="mission-reward"><i class="fas fa-coins"></i> {{ um.mission.rewardPoints }} taškų</span>
@@ -41,6 +49,7 @@
                         {% endif %}
                     </div>
 
+                    {# --- Vartotojo įrodymas --- #}
                     <div class="review-proof">
                         <h4><i class="fas fa-file-alt"></i> Naudotojo įrodymas:</h4>
                         <blockquote class="proof-text">
@@ -48,7 +57,9 @@
                         </blockquote>
                     </div>
 
+                    {# --- Veiksmo mygtukai: Patvirtinti arba Atmesti --- #}
                     <div class="review-actions">
+                        {# Patvirtinimo forma (POST metodas) #}
                         <form method="post" action="{{ path('admin_mission_approve', {id: um.id}) }}" style="display: inline;">
                             <button type="submit" class="btn btn-success"
                                     onclick="return confirm('Ar tikrai norite patvirtinti šią misiją?')">
@@ -56,8 +67,10 @@
                             </button>
                         </form>
 
+                        {# Atmetimo forma su priežasties lauku #}
                         <form method="post" action="{{ path('admin_mission_reject', {id: um.id}) }}" class="reject-form">
                             <div class="reject-input-group">
+                                {# Atmetimo priežasties tekstinis laukas (neprivalomas) #}
                                 <input type="text" name="rejection_reason" class="form-control"
                                        placeholder="Atmetimo priežastis (neprivaloma)..."
                                        style="flex: 1; padding: 8px 12px; font-size: 0.9rem;">
@@ -73,6 +86,7 @@
             {% endfor %}
         </div>
     {% else %}
+        {# Rodoma, kai laukiančių misijų nėra #}
         <div class="empty-state">
             <i class="fas fa-check-circle fa-3x" style="color: var(--success); margin-bottom: 15px; display: block;"></i>
             <p>Viskas peržiūrėta! Laukiančių misijų nėra.</p>

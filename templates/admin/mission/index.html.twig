@@ -1,14 +1,17 @@
+{# Paveldime bazinį šabloną #}
 {% extends 'base.html.twig' %}
 
 {% block title %}Admin – Misijos{% endblock %}
 
 {% block body %}
 <section class="section">
+    {# Antraštė su „Nauja misija" mygtuku #}
     <div class="section-header">
         <h1 class="page-title"><i class="fas fa-flag"></i> Misijų valdymas</h1>
         <a href="{{ path('admin_mission_new') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Nauja misija</a>
     </div>
 
+    {# Misijų lentelė #}
     <div class="table-responsive">
         <table class="data-table">
             <thead>

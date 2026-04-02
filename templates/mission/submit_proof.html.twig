@@ -1,12 +1,16 @@
+{# Paveldime bazinį šabloną #}
 {% extends 'base.html.twig' %}
 
+{# Puslapio pavadinimas su misijos pavadinimu #}
 {% block title %}Atlikti misiją — {{ mission.title }}{% endblock %}
 
 {% block body %}
 <section class="section">
     <h1 class="page-title"><i class="fas fa-paper-plane"></i> Pateikti įrodymą</h1>
 
+    {# === DVIEJŲ STULPELIŲ IŠDĖSTYMAS === #}
     <div class="proof-layout">
+        {# Kairė pusė – misijos informacija #}
         <div class="proof-mission-info">
             <div class="card">
                 <div class="card-body">
@@ -22,14 +26,17 @@
             </div>
         </div>
 
+        {# Dešinė pusė – įrodymo pateikimo forma #}
         <div class="proof-form-container">
             <div class="form-card">
                 <h2><i class="fas fa-pencil-alt"></i> Aprašykite, ką padarėte</h2>
                 <p class="section-subtitle">Parašykite, kaip atlikote šią misiją. Administratorius peržiūrės jūsų įrodymą.</p>
 
+                {# POST forma – siunčia duomenis į app_mission_submit_proof maršrutą #}
                 <form method="post" action="{{ path('app_mission_submit_proof', {id: mission.id}) }}">
                     <div class="form-group">
                         <label for="proof_text"><i class="fas fa-edit"></i> Jūsų įrodymas</label>
+                        {# Teksto laukas įrodymui parašyti #}
                         <textarea
                             id="proof_text"
                             name="proof_text"
@@ -40,6 +47,7 @@
                         ></textarea>
                     </div>
 
+                    {# Patarimai vartotojui #}
                     <div class="proof-tips">
                         <h4><i class="fas fa-lightbulb"></i> Patarimai</h4>
                         <ul>
@@ -49,6 +57,7 @@
                         </ul>
                     </div>
 
+                    {# Veiksmo mygtukai #}
                     <div class="proof-actions">
                         <a href="{{ path('app_missions') }}" class="btn btn-outline">
                             <i class="fas fa-arrow-left"></i> Atgal

@@ -1,40 +1,51 @@
+{# Paveldime bazinį šabloną #}
 {% extends 'base.html.twig' %}
 
+{# Puslapio pavadinimas #}
 {% block title %}Administravimas{% endblock %}
 
 {% block body %}
 <section class="section">
+    {# Administravimo skydelio antraštė #}
     <h1 class="page-title"><i class="fas fa-cog"></i> Administravimo skydelis</h1>
 
+    {# === ADMINISTRAVIMO NAVIGACIJOS KORTELĖS === #}
     <div class="admin-nav-grid">
+        {# Knygų valdymo kortelė #}
         <a href="{{ path('admin_books') }}" class="admin-nav-card">
             <i class="fas fa-book fa-2x"></i>
             <h3>Knygos</h3>
             <p>Valdyti knygų katalogą</p>
         </a>
+        {# Misijų valdymo kortelė #}
         <a href="{{ path('admin_missions') }}" class="admin-nav-card">
             <i class="fas fa-flag fa-2x"></i>
             <h3>Misijos</h3>
             <p>Valdyti misijas</p>
         </a>
+        {# Prizų valdymo kortelė #}
         <a href="{{ path('admin_rewards') }}" class="admin-nav-card">
             <i class="fas fa-gift fa-2x"></i>
             <h3>Prizai</h3>
             <p>Valdyti prizus</p>
         </a>
+        {# Misijų peržiūros kortelė su laukiančių skaičiumi #}
         <a href="{{ path('admin_mission_review') }}" class="admin-nav-card review-card-link">
             <i class="fas fa-clipboard-check fa-2x"></i>
             <h3>Misijų peržiūra</h3>
             <p>Peržiūrėti pateiktus įrodymus</p>
+            {# Rodome raudoną ženkliuką su skaičiumi, jei yra laukiančių misijų #}
             {% if pendingCount > 0 %}
                 <span class="pending-count-badge">{{ pendingCount }}</span>
             {% endif %}
         </a>
     </div>
 
+    {# === VARTOTOJŲ SĄRAŠO LENTELĖ === #}
     <h2 class="section-title mt-2"><i class="fas fa-users"></i> Vartotojų sąrašas</h2>
     <div class="table-responsive">
         <table class="data-table">
+            {# Lentelės antraštė #}
             <thead>
                 <tr>
                     <th>ID</th>
@@ -45,14 +56,18 @@
                     <th>Registracija</th>
                 </tr>
             </thead>
+            {# Lentelės kūnas – ciklas per vartotojus #}
             <tbody>
                 {% for u in users %}
                 <tr>
                     <td>{{ u.id }}</td>
                     <td>{{ u.username }}</td>
                     <td>{{ u.email }}</td>
+                    {# Rolės sujungtos kableliais #}
                     <td>{{ u.roles|join(', ') }}</td>
+                    {# Taškai su žvaigždės ikona #}
                     <td><i class="fas fa-star text-warning"></i> {{ u.points }}</td>
+                    {# Registracijos data #}
                     <td>{{ u.createdAt|date('Y-m-d') }}</td>
                 </tr>
                 {% endfor %}

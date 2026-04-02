@@ -1,24 +1,34 @@
+{# Paveldime bazinį šabloną #}
 {% extends 'base.html.twig' %}
 
+{# Puslapio pavadinimas #}
 {% block title %}Knygų katalogas{% endblock %}
 
 {% block body %}
 <section class="section">
+    {# Puslapio antraštė #}
     <h1 class="page-title"><i class="fas fa-book"></i> Knygų katalogas</h1>
 
+    {# === FILTRŲ JUOSTA – paieška ir filtravimas === #}
     <div class="filter-bar">
+        {# Forma siunčia GET užklausą į /knygos su paieškos parametrais #}
         <form method="get" action="{{ path('app_books') }}" class="filter-form">
+            {# Paieškos laukas – ieško pagal pavadinimą arba autorių #}
             <div class="filter-group">
                 <input type="text" name="q" value="{{ search }}" class="form-control" placeholder="Ieškoti pagal pavadinimą ar autorių...">
             </div>
+            {# Kategorijos filtras – select laukas su kategorijomis iš DB #}
             <div class="filter-group">
                 <select name="category" class="form-control">
                     <option value="">Visos kategorijos</option>
+                    {# Ciklas per visas kategorijas #}
                     {% for cat in categories %}
+                        {# selected atributas pažymi aktyvią kategoriją #}
                         <option value="{{ cat.id }}" {{ selectedCategory == cat.id ? 'selected' : '' }}>{{ cat.name }}</option>
                     {% endfor %}
                 </select>
             </div>
+            {# Amžiaus filtras – select laukas nuo 3 iki 16 metų #}
             <div class="filter-group">
                 <select name="age" class="form-control">
                     <option value="">Visi amžiai</option>
@@ -27,13 +37,17 @@
                     {% endfor %}
                 </select>
             </div>
+            {# Paieškos mygtukas #}
             <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Ieškoti</button>
         </form>
     </div>
 
+    {# === KNYGŲ KORTELIŲ TINKLELIS === #}
     <div class="card-grid">
+        {# Ciklas per filtruotas knygas #}
         {% for book in books %}
         <div class="card book-card">
+            {# Viršelio sritis su kategorijos spalva #}
             <div class="card-image" style="background-color: {{ book.category ? book.category.color : '#6C63FF' }}">
                 {% if book.coverImage %}
                     <img src="{{ book.coverImage }}" alt="{{ book.title }}">
@@ -44,16 +58,20 @@
             <div class="card-body">
                 <h3>{{ book.title }}</h3>
                 <p class="card-meta"><i class="fas fa-user-edit"></i> {{ book.author }}</p>
+                {# Amžiaus diapazonas #}
                 {% if book.minAge and book.maxAge %}
                     <span class="age-badge"><i class="fas fa-child"></i> {{ book.minAge }}–{{ book.maxAge }} m.</span>
                 {% endif %}
+                {# Kategorijos žymė #}
                 {% if book.category %}
                     <span class="tag" style="background-color: {{ book.category.color }}">{{ book.category.name }}</span>
                 {% endif %}
+                {# Nuoroda į knygos detalių puslapį #}
                 <a href="{{ path('app_book_show', {id: book.id}) }}" class="btn btn-primary btn-block">Skaityti daugiau</a>
             </div>
         </div>
         {% else %}
+            {# Rodoma, kai pagal filtrus knygų nerasta #}
             <p class="empty-state"><i class="fas fa-search"></i> Knygų pagal pasirinktus filtrus nerasta.</p>
         {% endfor %}
     </div>

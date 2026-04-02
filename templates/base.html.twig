@@ -1,38 +1,55 @@
 <!DOCTYPE html>
+{# Nurodome, kad puslapis yra lietuvių kalba #}
 <html lang="lt">
 <head>
+    {# Nustatome simbolių koduotę UTF-8 (palaiko lietuviškas raides) #}
     <meta charset="UTF-8">
+    {# Nustatome viewport mobiliam rodymui (responsive dizainas) #}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {# Puslapio pavadinimas – kiekvienas puslapis gali perrašyti per block title #}
     <title>{% block title %}Vaikų Virtuali Biblioteka{% endblock %}</title>
+    {# SEO meta aprašymas #}
     <meta name="description" content="Virtuali biblioteka vaikams – skaityk knygas, atlik misijas, rink taškus ir laimėk prizus!">
+    {# Google Fonts – Nunito šriftas (vaikams draugiškas, apvalus) #}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    {# Font Awesome ikonų biblioteka (fas fa-book, fas fa-star ir kt.) #}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    {# Pagrindinis projekto CSS stilius #}
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 <body>
+    {# === SVETAINĖS ANTRAŠTĖ (HEADER) === #}
     <header class="main-header">
         <div class="container header-inner">
+            {# Logotipas su nuoroda į pagrindinį puslapį #}
             <a href="{{ path('app_home') }}" class="logo">
-                <i class="fas fa-book-open"></i>
+                <i class="fas fa-book-open"></i> {# Knygos ikona #}
                 <span>Vaikų Biblioteka</span>
             </a>
+            {# Mobilaus meniu mygtukas (rodomas tik mažuose ekranuose) #}
             <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('open')">
-                <i class="fas fa-bars"></i>
+                <i class="fas fa-bars"></i> {# Hamburger meniu ikona #}
             </button>
+            {# Navigacijos nuorodos #}
             <nav class="nav-links">
                 <a href="{{ path('app_home') }}"><i class="fas fa-home"></i> Pradžia</a>
                 <a href="{{ path('app_books') }}"><i class="fas fa-book"></i> Knygos</a>
                 <a href="{{ path('app_missions') }}"><i class="fas fa-flag"></i> Misijos</a>
                 <a href="{{ path('app_rewards') }}"><i class="fas fa-gift"></i> Prizai</a>
+                {# Jei vartotojas prisijungęs – rodome profilio nuorodas ir taškus #}
                 {% if app.user %}
                     <a href="{{ path('app_profile') }}"><i class="fas fa-user"></i> Profilis</a>
+                    {# Taškų ženkliukas su animacija #}
                     <span class="points-badge"><i class="fas fa-star"></i> {{ app.user.points }} tšk.</span>
+                    {# Jei vartotojas yra administratorius – rodome admin nuorodą #}
                     {% if is_granted('ROLE_ADMIN') %}
                         <a href="{{ path('admin_dashboard') }}" class="admin-link"><i class="fas fa-cog"></i> Admin</a>
                     {% endif %}
+                    {# Atsijungimo mygtukas #}
                     <a href="{{ path('app_logout') }}" class="btn btn-sm btn-outline">Atsijungti</a>
                 {% else %}
+                    {# Jei vartotojas neprisijungęs – rodome prisijungimo ir registracijos mygtukus #}
                     <a href="{{ path('app_login') }}" class="btn btn-sm btn-primary">Prisijungti</a>
                     <a href="{{ path('app_register') }}" class="btn btn-sm btn-secondary">Registruotis</a>
                 {% endif %}
@@ -40,27 +57,34 @@
         </div>
     </header>
 
+    {# === PAGRINDINIS TURINYS === #}
     <main class="main-content">
         <div class="container">
+            {# Flash pranešimai (sėkmė, klaidos, įspėjimai) – rodomi po veiksmo #}
             {% for label, messages in app.flashes %}
                 {% for message in messages %}
                     <div class="alert alert-{{ label }}">
                         {{ message }}
+                        {# Uždarymo mygtukas (× simbolis) #}
                         <button class="alert-close" onclick="this.parentElement.remove()">&times;</button>
                     </div>
                 {% endfor %}
             {% endfor %}
 
+            {# Čia įterpiamas kiekvieno puslapio turinys per block body #}
             {% block body %}{% endblock %}
         </div>
     </main>
 
+    {# === SVETAINĖS PORAŠTĖ (FOOTER) === #}
     <footer class="main-footer">
         <div class="container footer-inner">
+            {# Pirma stulpelis – aprašymas #}
             <div class="footer-col">
                 <h4><i class="fas fa-book-open"></i> Vaikų Biblioteka</h4>
                 <p>Virtuali biblioteka, skatinanti vaikus skaityti ir mokytis žaidžiant!</p>
             </div>
+            {# Antras stulpelis – nuorodos #}
             <div class="footer-col">
                 <h4>Nuorodos</h4>
                 <ul>
@@ -69,6 +93,7 @@
                     <li><a href="{{ path('app_missions') }}">Misijos</a></li>
                 </ul>
             </div>
+            {# Trečias stulpelis – informacija #}
             <div class="footer-col">
                 <h4>Informacija</h4>
                 <ul>
@@ -78,11 +103,13 @@
                 </ul>
             </div>
         </div>
+        {# Autorių teisių eilutė #}
         <div class="footer-bottom">
             <p>&copy; {{ "now"|date("Y") }} Vaikų Virtuali Biblioteka. Visos teisės saugomos.</p>
         </div>
     </footer>
 
+    {# JavaScript failas (jei reikia interaktyvumo) #}
     <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

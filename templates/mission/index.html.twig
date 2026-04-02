@@ -1,3 +1,4 @@
+{# Paveldime bazinį šabloną #}
 {% extends 'base.html.twig' %}
 
 {% block title %}Misijos{% endblock %}
@@ -7,47 +8,67 @@
     <h1 class="page-title"><i class="fas fa-flag"></i> Misijos</h1>
     <p class="section-subtitle">Atlik misijas, kaupk taškus ir gauk ženkliukus!</p>
 
+    {# === MISIJŲ KORTELIŲ TINKLELIS === #}
     <div class="card-grid">
+        {# Ciklas per visas misijas #}
         {% for mission in missions %}
+        {# Kortelė su CSS klase pagal statusą (completed/pending/rejected) #}
         <div class="card mission-card {{ mission.id in completedMissionIds ? 'completed' : '' }} {{ mission.id in pendingMissionIds ? 'pending' : '' }} {{ mission.id in rejectedMissionIds ? 'rejected' : '' }}">
             <div class="card-body">
+                {# === STATUSO ŽENKLIUKAS === #}
                 <div class="mission-status">
                     {% if mission.id in completedMissionIds %}
+                        {# Žalia: misija patvirtinta #}
                         <span class="badge badge-success"><i class="fas fa-check-circle"></i> Patvirtinta</span>
                     {% elseif mission.id in pendingMissionIds %}
+                        {# Geltona: misija laukia peržiūros #}
                         <span class="badge badge-warning"><i class="fas fa-hourglass-half"></i> Laukia patvirtinimo</span>
                     {% elseif mission.id in rejectedMissionIds %}
+                        {# Raudona: misija atmesta #}
                         <span class="badge badge-danger"><i class="fas fa-times-circle"></i> Atmesta</span>
                     {% else %}
+                        {# Pilka: misija dar neatlikta #}
                         <span class="badge badge-pending"><i class="fas fa-hourglass-half"></i> Neatlikta</span>
                     {% endif %}
                 </div>
+                {# Misijos pavadinimas #}
                 <h3><i class="fas fa-bullseye"></i> {{ mission.title }}</h3>
+                {# Misijos aprašymas #}
                 <p>{{ mission.description }}</p>
+                {# Misijos tipas (jei nurodytas) #}
                 {% if mission.type %}
                     <span class="tag"><i class="fas fa-tag"></i> {{ mission.type }}</span>
                 {% endif %}
+                {# Taškų atlygis #}
                 <div class="mission-reward">
                     <i class="fas fa-coins"></i> {{ mission.rewardPoints }} taškų
                 </div>
 
+                {# === VEIKSMO MYGTUKAI PAGAL STATUSĄ === #}
+
+                {# Jei misija atmesta – galima pateikti iš naujo #}
                 {% if mission.id in rejectedMissionIds %}
+                    {# Rodome atmetimo priežastį (jei yra) #}
                     {% if rejectedReasons[mission.id] is defined and rejectedReasons[mission.id] %}
                         <div class="alert alert-danger mb-1" style="margin-top: 8px; padding: 10px 14px; font-size: 0.9rem;">
                             <span><i class="fas fa-info-circle"></i> Priežastis: {{ rejectedReasons[mission.id] }}</span>
                         </div>
                     {% endif %}
+                    {# Mygtukas pateikti misiją iš naujo #}
                     <a href="{{ path('app_mission_submit_proof', {id: mission.id}) }}" class="btn btn-secondary btn-block">
                         <i class="fas fa-redo"></i> Pateikti iš naujo
                     </a>
+                {# Jei vartotojas prisijungęs ir misija dar neatlikta/nepateikta #}
                 {% elseif app.user and mission.id not in completedMissionIds and mission.id not in pendingMissionIds %}
                     <a href="{{ path('app_mission_submit_proof', {id: mission.id}) }}" class="btn btn-primary btn-block">
                         <i class="fas fa-paper-plane"></i> Atlikti misiją
                     </a>
+                {# Jei misija pateikta ir laukia peržiūros #}
                 {% elseif mission.id in pendingMissionIds %}
                     <div class="pending-info">
                         <i class="fas fa-clock"></i> Jūsų įrodymas peržiūrimas...
                     </div>
+                {# Jei vartotojas neprisijungęs #}
                 {% elseif not app.user %}
                     <a href="{{ path('app_login') }}" class="btn btn-outline btn-block">
                         <i class="fas fa-sign-in-alt"></i> Prisijunkite, kad atliktumėte
@@ -56,6 +77,7 @@
             </div>
         </div>
         {% else %}
+            {# Rodoma, kai misijų nėra #}
             <p class="empty-state"><i class="fas fa-inbox"></i> Misijų dar nėra.</p>
         {% endfor %}
     </div>

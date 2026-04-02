@@ -1,14 +1,17 @@
+{# Paveldime bazinį šabloną #}
 {% extends 'base.html.twig' %}
 
 {% block title %}Admin – Knygos{% endblock %}
 
 {% block body %}
 <section class="section">
+    {# Antraštė su „Nauja knyga" mygtuku #}
     <div class="section-header">
         <h1 class="page-title"><i class="fas fa-book"></i> Knygų valdymas</h1>
         <a href="{{ path('admin_book_new') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Nauja knyga</a>
     </div>
 
+    {# Knygų lentelė #}
     <div class="table-responsive">
         <table class="data-table">
             <thead>
@@ -22,19 +25,24 @@
                 </tr>
             </thead>
             <tbody>
+                {# Ciklas per knygas #}
                 {% for book in books %}
                 <tr>
                     <td>{{ book.id }}</td>
                     <td>{{ book.title }}</td>
                     <td>{{ book.author }}</td>
+                    {# Kategorija arba brūkšnys, jei nėra #}
                     <td>{{ book.category ? book.category.name : '–' }}</td>
+                    {# Amžiaus diapazonas #}
                     <td>{{ book.minAge ?? '–' }}–{{ book.maxAge ?? '–' }}</td>
+                    {# Veiksmo mygtukai: Redaguoti ir Trinti #}
                     <td class="actions">
                         <a href="{{ path('admin_book_edit', {id: book.id}) }}" class="btn btn-sm btn-secondary"><i class="fas fa-edit"></i></a>
                         <a href="{{ path('admin_book_delete', {id: book.id}) }}" class="btn btn-sm btn-danger" onclick="return confirm('Ar tikrai norite ištrinti?')"><i class="fas fa-trash"></i></a>
                     </td>
                 </tr>
                 {% else %}
+                {# Rodoma, kai knygų nėra #}
                 <tr><td colspan="6" class="empty-state">Knygų nėra</td></tr>
                 {% endfor %}
             </tbody>
