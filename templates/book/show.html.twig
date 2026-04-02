@@ -45,11 +45,18 @@
                 </div>
             {% endif %}
 
-            {# Turinio nuoroda – atidaro PDF arba audio naujame skirtuke #}
+            {# Skaitymo mygtukai #}
             {% if book.contentUrl %}
-                <a href="{{ book.contentUrl }}" target="_blank" class="btn btn-primary btn-lg">
-                    <i class="fas fa-play-circle"></i> Atidaryti turinį (PDF / Audio)
-                </a>
+                <div class="book-actions">
+                    {# Pagrindinis mygtukas – skaitymo puslapis #}
+                    <a href="{{ path('app_book_read', {id: book.id}) }}" class="btn btn-primary btn-lg">
+                        <i class="fas fa-book-reader"></i> Skaityti knygą
+                    </a>
+                    {# Antrinis mygtukas – atidaryti šaltinyje #}
+                    <a href="{{ book.contentUrl }}" target="_blank" class="btn btn-outline">
+                        <i class="fas fa-external-link-alt"></i> Atidaryti Project Gutenberg
+                    </a>
+                </div>
             {% endif %}
         </div>
     </div>

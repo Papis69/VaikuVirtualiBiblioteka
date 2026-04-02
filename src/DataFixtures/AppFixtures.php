@@ -71,21 +71,192 @@ class AppFixtures extends Fixture
 
         // === Knygos ===
 
-        // Knygų duomenys: [pavadinimas, autorius, aprašymas, kategorija, minAmžius, maxAmžius]
+        // Realių knygų duomenys iš Project Gutenberg (public domain)
+        // [pavadinimas, autorius, aprašymas, kategorija, minAmžius, maxAmžius, viršelis, skaitymo URL]
         $booksData = [
-            ['Raudonkepuraitė', 'Broliai Grimm', 'Klasikinė pasaka apie drąsią mergaitę.', 'Pasakos', 4, 8],
-            ['Peliukas ir jo draugai', 'Autorius A', 'Nuotaikingas pasakojimas apie draugystę.', 'Pasakos', 3, 6],
-            ['Džiunglių knyga', 'Rudyard Kipling', 'Berniukas Mauglis auga džiunglėse tarp gyvūnų.', 'Nuotykiai', 6, 12],
-            ['Robinzonas Kruzas vaikams', 'Daniel Defoe', 'Supaprastinta versija vaikams.', 'Nuotykiai', 8, 14],
-            ['Kosmoso paslaptys', 'Autorius B', 'Sužinok apie planetas ir žvaigždes!', 'Mokslas', 7, 12],
-            ['Kaip veikia mašinos', 'Autorius C', 'Technika ir inžinerija vaikams.', 'Mokslas', 8, 14],
-            ['Lietuvos miškų gyvūnai', 'Autorius D', 'Pažink Lietuvos gamtą!', 'Gamta', 5, 10],
-            ['Augalų pasaulis', 'Autorius E', 'Viskas apie augalus ir gėles.', 'Gamta', 6, 11],
-            ['Haris Poteris vaikams', 'J.K. Rowling', 'Magijos pasaulio nuotykiai.', 'Fantastika', 8, 14],
-            ['Drakonų sala', 'Autorius F', 'Fantastiniai nuotykiai saloje.', 'Fantastika', 7, 13],
+            // --- Fantastika ---
+            [
+                'Alisa stebuklų šalyje',
+                'Lewis Carroll',
+                'Mergaitė Alisa seka baltą triušį į triušio urvą ir patenka į fantastinį pasaulį, pilną keistų būtybių, absurdiškų situacijų ir nepamirštamų nuotykių.',
+                'Fantastika', 6, 14,
+                'https://www.gutenberg.org/cache/epub/11/pg11.cover.medium.jpg',
+                'https://www.gutenberg.org/cache/epub/11/pg11-images.html',
+            ],
+            [
+                'Alisa veidrodžių karalystėje',
+                'Lewis Carroll',
+                'Alisa pereina per veidrodį ir atsiduria fantastiškame pasaulyje, kur viskas yra priešingai nei tikrovėje – šachmatų figūros atgyja, o logika veikia kitaip.',
+                'Fantastika', 7, 14,
+                'https://www.gutenberg.org/cache/epub/12/pg12.cover.medium.jpg',
+                'https://www.gutenberg.org/cache/epub/12/pg12-images.html',
+            ],
+            [
+                'Piteris Penas',
+                'J.M. Barrie',
+                'Berniukas, kuris niekada neužauga, nuneša Vendę ir jos brolius į Niekados šalį, kur jų laukia nuotykiai su piratais ir fėjomis.',
+                'Fantastika', 6, 12,
+                'https://www.gutenberg.org/cache/epub/16/pg16.cover.medium.jpg',
+                'https://www.gutenberg.org/cache/epub/16/pg16-images.html',
+            ],
+            [
+                'Ozo šalies burtininkas',
+                'L. Frank Baum',
+                'Mergaitė Dorotė su šuniuku Totu patenka į stebuklingą Ozo šalį ir leidžiasi į kelionę pas didįjį burtininką kartu su Kaliausiu, Skardžiumi ir Bailiuoju Liūtu.',
+                'Fantastika', 6, 12,
+                'https://www.gutenberg.org/cache/epub/55/pg55.cover.medium.jpg',
+                'https://www.gutenberg.org/cache/epub/55/pg55-images.html',
+            ],
+            [
+                'Paslaptingas sodas',
+                'Frances Hodgson Burnett',
+                'Merė Lenoks atranda paslaptingą, užrakintą sodą ir kartu su draugais padeda jam vėl pražysti, tuo pačiu atskleisdama tikrąją draugystės galią.',
+                'Fantastika', 7, 12,
+                'https://www.gutenberg.org/cache/epub/113/pg113.cover.medium.jpg',
+                'https://www.gutenberg.org/cache/epub/113/pg113-images.html',
+            ],
+            // --- Pasakos ---
+            [
+                'Brolių Grimų pasakos',
+                'Broliai Grimm',
+                'Klasikinis pasakų rinkinys su tokiomis pasakomis kaip Snieguolė, Raudonkepuraitė, Pelenė, Rapuncelė ir daugeliu kitų – visų laikų vaikų mėgstamiausios istorijos.',
+                'Pasakos', 4, 12,
+                'https://www.gutenberg.org/cache/epub/2591/pg2591.cover.medium.jpg',
+                'https://www.gutenberg.org/cache/epub/2591/pg2591-images.html',
+            ],
+            [
+                'Ezopo pasakėčios',
+                'Ezopas',
+                'Senovės graikų pasakėčių rinkinys su gyvūnais – kiekviena pasakėčia moko svarbios gyvenimo pamokos apie išmintį, draugystę ir sąžiningumą.',
+                'Pasakos', 4, 10,
+                'https://www.gutenberg.org/cache/epub/11339/pg11339.cover.medium.jpg',
+                'https://www.gutenberg.org/cache/epub/11339/pg11339-images.html',
+            ],
+            [
+                'Pinokio nuotykiai',
+                'Carlo Collodi',
+                'Medinis lėlė Pinokis atgyja ir patiria daugybę nuotykių, kol galiausiai savo gerumu ir drąsa nusipelno tapti tikru berniuku.',
+                'Pasakos', 5, 12,
+                'https://www.gutenberg.org/cache/epub/500/pg500.cover.medium.jpg',
+                'https://www.gutenberg.org/cache/epub/500/pg500-images.html',
+            ],
+            [
+                'Aksominis zuikutis',
+                'Margery Williams',
+                'Nuostabus pasakojimas apie pliušinį zuikutį, kuris svajoja tapti tikru. Jautri istorija apie meilės galią ir tai, ką reiškia būti tikram.',
+                'Pasakos', 4, 8,
+                'https://www.gutenberg.org/cache/epub/11757/pg11757.cover.medium.jpg',
+                'https://www.gutenberg.org/cache/epub/11757/pg11757-images.html',
+            ],
+            [
+                'Kalėdų giesmė',
+                'Charles Dickens',
+                'Šykštuolis Ebenezeris Skrudžas per vieną Kalėdų naktį sulaukia trijų dvasių vizitų, kurie visiškai pakeičia jo požiūrį į gyvenimą ir žmones.',
+                'Pasakos', 8, 14,
+                'https://www.gutenberg.org/cache/epub/46/pg46.cover.medium.jpg',
+                'https://www.gutenberg.org/cache/epub/46/pg46-images.html',
+            ],
+            [
+                'Mažoji princesė',
+                'Frances Hodgson Burnett',
+                'Sara Krju – turtingo tėvo dukra, kuri netekusi visko išsaugo kilnumą, vaizduotę ir gerumą net sunkiausiomis aplinkybėmis.',
+                'Pasakos', 7, 12,
+                'https://www.gutenberg.org/cache/epub/146/pg146.cover.medium.jpg',
+                'https://www.gutenberg.org/cache/epub/146/pg146-images.html',
+            ],
+            // --- Nuotykiai ---
+            [
+                'Tomo Sojerio nuotykiai',
+                'Mark Twain',
+                'Išdykęs berniukas Tomas Sojeris gyvena prie Misisipės upės ir patenka į įvairius nuotykius – nuo tvorų dažymo iki lobių paieškos.',
+                'Nuotykiai', 8, 14,
+                'https://www.gutenberg.org/cache/epub/74/pg74.cover.medium.jpg',
+                'https://www.gutenberg.org/cache/epub/74/pg74-images.html',
+            ],
+            [
+                'Heklberio Fino nuotykiai',
+                'Mark Twain',
+                'Hakas Finas pabėga nuo savo tėvo ir kartu su draugu Džimu keliauja plaustu Misisipės upe, patirdamas nepamirštamus nuotykius.',
+                'Nuotykiai', 10, 16,
+                'https://www.gutenberg.org/cache/epub/76/pg76.cover.medium.jpg',
+                'https://www.gutenberg.org/cache/epub/76/pg76-images.html',
+            ],
+            [
+                'Lobių sala',
+                'Robert Louis Stevenson',
+                'Jaunas Džimas Hokinsas randa piratų lobio žemėlapį ir leidžiasi į pavojingą kelionę laivu, kur susiduria su klastinguoju Džonu Silveru.',
+                'Nuotykiai', 8, 14,
+                'https://www.gutenberg.org/cache/epub/120/pg120.cover.medium.jpg',
+                'https://www.gutenberg.org/cache/epub/120/pg120-images.html',
+            ],
+            [
+                'Robinzonas Kruzas',
+                'Daniel Defoe',
+                'Jūreivis Robinzonas Kruzas po laivo sudužimo atsiduria negyvenamoje saloje ir turi išmokti išgyventi vienas – statydamas pastogę, augindamas maistą.',
+                'Nuotykiai', 9, 16,
+                'https://www.gutenberg.org/cache/epub/521/pg521.cover.medium.jpg',
+                'https://www.gutenberg.org/cache/epub/521/pg521-images.html',
+            ],
+            [
+                'Gamtos šauksmas',
+                'Jack London',
+                'Šuo Bekas iš patogaus Kalifornijos gyvenimo patenka į Aliaskos tyrus, kur turi prisitaikyti prie laukinės gamtos ir atrasti savo tikrąją prigimtį.',
+                'Nuotykiai', 10, 16,
+                'https://www.gutenberg.org/cache/epub/215/pg215.cover.medium.jpg',
+                'https://www.gutenberg.org/cache/epub/215/pg215-images.html',
+            ],
+            [
+                'Anė iš Žaliųjų Stogų',
+                'L.M. Montgomery',
+                'Našlaitė Anė Šėrlė atvyksta į Žaliuosius Stogus Princo Edvardo saloje ir užkariauja visų širdis savo vaizduote, nuoširdumu ir energija.',
+                'Nuotykiai', 8, 14,
+                'https://www.gutenberg.org/cache/epub/45/pg45.cover.medium.jpg',
+                'https://www.gutenberg.org/cache/epub/45/pg45-images.html',
+            ],
+            [
+                'Mažosios moterys',
+                'Louisa May Alcott',
+                'Keturių seserų – Meg, Džo, Bet ir Eimės – augimo, draugystės ir šeimos meilės istorija Amerikos pilietinio karo metais.',
+                'Nuotykiai', 9, 16,
+                'https://www.gutenberg.org/cache/epub/514/pg514.cover.medium.jpg',
+                'https://www.gutenberg.org/cache/epub/514/pg514-images.html',
+            ],
+            // --- Gamta ---
+            [
+                'Džiunglių knyga',
+                'Rudyard Kipling',
+                'Berniukas Mauglis auga džiunglėse tarp vilkų, meškų ir panterų, mokosi džiunglių dėsnių ir susiduria su grėsmingu tigru Šir Chanu.',
+                'Gamta', 7, 14,
+                'https://www.gutenberg.org/cache/epub/236/pg236.cover.medium.jpg',
+                'https://www.gutenberg.org/cache/epub/236/pg236-images.html',
+            ],
+            [
+                'Juodoji Gražuolė',
+                'Anna Sewell',
+                'Žirgo Juodosios Gražuolės gyvenimo istorija, pasakojama paties žirgo lūpomis – apie meilę, skausmą, gerumą ir gyvūnų gerovę.',
+                'Gamta', 7, 14,
+                'https://www.gutenberg.org/cache/epub/271/pg271.cover.medium.jpg',
+                'https://www.gutenberg.org/cache/epub/271/pg271-images.html',
+            ],
+            [
+                'Vėjas gluosniuose',
+                'Kenneth Grahame',
+                'Kurmio, Žiurkėno, Rupūžės ir Barsuko nuotykiai paupyje – jaukus ir juokingas pasakojimas apie draugystę ir gamtos grožį.',
+                'Gamta', 6, 12,
+                'https://www.gutenberg.org/cache/epub/289/pg289.cover.medium.jpg',
+                'https://www.gutenberg.org/cache/epub/289/pg289-images.html',
+            ],
+            [
+                'Heidi',
+                'Johanna Spyri',
+                'Maža mergaitė Heidi auga pas senelį Alpėse, kur ji atranda gamtos grožį, patiria draugystės džiaugsmą ir moko mus vertinti paprastą gyvenimą.',
+                'Gamta', 5, 12,
+                'https://www.gutenberg.org/cache/epub/1448/pg1448.cover.medium.jpg',
+                'https://www.gutenberg.org/cache/epub/1448/pg1448-images.html',
+            ],
         ];
         // Sukuriame kiekvieną knygą ir priskiriame kategoriją
-        foreach ($booksData as [$title, $author, $desc, $catName, $minAge, $maxAge]) {
+        foreach ($booksData as [$title, $author, $desc, $catName, $minAge, $maxAge, $cover, $url]) {
             $book = new Book();
             $book->setTitle($title);                  // Pavadinimas
             $book->setAuthor($author);                // Autorius
@@ -93,6 +264,8 @@ class AppFixtures extends Fixture
             $book->setCategory($categories[$catName]); // Priskiriame kategoriją iš masyvo
             $book->setMinAge($minAge);                // Minimalus amžius
             $book->setMaxAge($maxAge);                // Maksimalus amžius
+            $book->setCoverImage($cover);             // Viršelio nuotrauka (Gutenberg)
+            $book->setContentUrl($url);               // Skaitymo nuoroda (Gutenberg HTML)
             $manager->persist($book);
         }
 

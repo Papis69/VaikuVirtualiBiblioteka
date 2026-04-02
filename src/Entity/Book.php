@@ -48,6 +48,10 @@ class Book
     #[ORM\Column(length: 500, nullable: true)]
     private ?string $contentUrl = null; // Nuoroda į knygos turinį (PDF/audio)
 
+    // Knygos tekstinis turinys – ilgas tekstas, neprivalomas (saugomas tiesiogiai DB)
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $content = null; // Pilnas knygos tekstas skaitymui svetainėje
+
     // Ryšys: daug knygų priklauso vienai kategorijai (ManyToOne)
     #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'books')]
     #[ORM\JoinColumn(nullable: true)] // Kategorija neprivaloma
@@ -157,6 +161,19 @@ class Book
     public function setContentUrl(?string $contentUrl): static
     {
         $this->contentUrl = $contentUrl;
+        return $this;
+    }
+
+    // Grąžina knygos tekstinį turinį
+    public function getContent(): ?string
+    {
+        return $this->content;
+    }
+
+    // Nustato knygos tekstinį turinį
+    public function setContent(?string $content): static
+    {
+        $this->content = $content;
         return $this;
     }
 

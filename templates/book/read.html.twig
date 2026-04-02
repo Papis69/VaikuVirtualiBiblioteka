@@ -1,0 +1,94 @@
+{# Paveldime bazinį šabloną #}
+{% extends 'base.html.twig' %}
+
+{# Puslapio pavadinimas su knygos pavadinimu #}
+{% block title %}Skaityti: {{ book.title }}{% endblock %}
+
+{% block body %}
+<section class="section">
+    {# === SKAITYMO ĮRANKIŲ JUOSTA === #}
+    <div class="reading-toolbar">
+        {# Grįžimo mygtukas #}
+        <a href="{{ path('app_book_show', {id: book.id}) }}" class="btn btn-outline btn-sm">
+            <i class="fas fa-arrow-left"></i> Grįžti
+        </a>
+        {# Knygos pavadinimas #}
+        <h2 class="reading-title"><i class="fas fa-book-reader"></i> {{ book.title }}</h2>
+        {# Nuoroda atidaryti naujame lange (visada veikia) #}
+        <a href="{{ book.contentUrl }}" target="_blank" class="btn btn-primary btn-sm" id="openExternal">
+            <i class="fas fa-external-link-alt"></i> Atidaryti naujame lange
+        </a>
+    </div>
+
+    {# === SKAITYMO SRITIS === #}
+    <div class="reading-frame-container">
+        {# Iframe bandymas – gali veikti arba būti užblokuotas dėl X-Frame-Options #}
+        <iframe
+            src="{{ book.contentUrl }}"
+            class="reading-iframe"
+            id="readingFrame"
+            allowfullscreen
+            sandbox="allow-same-origin allow-scripts allow-popups"
+            title="Knygos turinys: {{ book.title }}"
+        ></iframe>
+
+        {# Atsarginis variantas – rodomas, jei iframe neveikia #}
+        <div class="reading-fallback" id="readingFallback">
+            <div class="reading-fallback-content">
+                <i class="fas fa-book-open fa-3x"></i>
+                <h3>{{ book.title }}</h3>
+                <p class="reading-fallback-author"><i class="fas fa-user-edit"></i> {{ book.author }}</p>
+                {% if book.description %}
+                    <p class="reading-fallback-desc">{{ book.description }}</p>
+                {% endif %}
+                <p class="reading-fallback-info">
+                    <i class="fas fa-info-circle"></i> Knyga bus atidaryta Project Gutenberg svetainėje naujame skirtuke.
+                </p>
+                <a href="{{ book.contentUrl }}" target="_blank" class="btn btn-primary btn-lg">
+                    <i class="fas fa-book-reader"></i> Pradėti skaityti
+                </a>
+                <p class="reading-fallback-source">
+                    Šaltinis: <a href="https://www.gutenberg.org" target="_blank">Project Gutenberg</a> – nemokamos viešo naudojimo knygos
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# JavaScript: aptikti, ar iframe užsikrovė #}
+<script>
+(function() {
+    var iframe = document.getElementById('readingFrame');
+    var fallback = document.getElementById('readingFallback');
+    var loaded = false;
+
+    iframe.addEventListener('load', function() {
+        loaded = true;
+        try {
+            // Bandome pasiekti iframe turinį (veiks tik jei same-origin)
+            var doc = iframe.contentDocument || iframe.contentWindow.document;
+            if (doc && doc.body && doc.body.innerHTML.length > 100) {
+                fallback.style.display = 'none';
+            }
+        } catch(e) {
+            // Cross-origin arba užblokuotas – rodome fallback
+            fallback.style.display = 'flex';
+            iframe.style.display = 'none';
+        }
+    });
+
+    iframe.addEventListener('error', function() {
+        fallback.style.display = 'flex';
+        iframe.style.display = 'none';
+    });
+
+    // Jei po 4 sekundžių iframe neužsikrovė arba tuščias, rodome fallback
+    setTimeout(function() {
+        if (!loaded) {
+            fallback.style.display = 'flex';
+            iframe.style.display = 'none';
+        }
+    }, 4000);
+})();
+</script>
+{% endblock %}

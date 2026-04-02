@@ -858,3 +858,135 @@ img { max-width: 100%; height: auto; }
     }
 }
 
+/* --- Reading Page --- */
+.reading-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+    padding: 10px 0;
+    flex-wrap: wrap;
+}
+
+.reading-title {
+    flex: 1;
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.reading-title i {
+    color: var(--primary);
+}
+
+.reading-frame-container {
+    position: relative;
+    width: 100%;
+    height: 80vh;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    background: white;
+}
+
+.reading-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.reading-fallback {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #F0F4FF 0%, #E8ECFF 100%);
+    z-index: 10;
+}
+
+.reading-fallback-content {
+    text-align: center;
+    padding: 40px;
+    max-width: 500px;
+}
+
+.reading-fallback-content > i {
+    color: var(--primary);
+    margin-bottom: 20px;
+    display: block;
+}
+
+.reading-fallback-content h3 {
+    font-size: 1.6rem;
+    margin-bottom: 8px;
+    color: var(--text);
+}
+
+.reading-fallback-author {
+    color: var(--text-light);
+    font-size: 1.05rem;
+    margin-bottom: 15px;
+}
+
+.reading-fallback-desc {
+    color: var(--text-light);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.reading-fallback-info {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+    padding: 10px 15px;
+    background: rgba(108, 99, 255, 0.08);
+    border-radius: var(--radius-sm);
+}
+
+.reading-fallback-source {
+    margin-top: 20px;
+    font-size: 0.85rem;
+    color: var(--text-light);
+}
+
+/* --- Book Actions (Show Page) --- */
+.book-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+
+@media (max-width: 768px) {
+    .reading-toolbar {
+        gap: 10px;
+    }
+
+    .reading-title {
+        flex-basis: 100%;
+        order: -1;
+        font-size: 1rem;
+    }
+
+    .reading-frame-container {
+        height: 70vh;
+    }
+
+    .book-actions {
+        flex-direction: column;
+    }
+
+    .book-actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}

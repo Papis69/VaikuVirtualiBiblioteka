@@ -62,4 +62,28 @@ class BookController extends AbstractController
             'book' => $book, // Perduodame knygos objektą šablonui
         ]);
     }
+
+    // Knygos skaitymo puslapis: /knygos/{id}/skaityti
+    #[Route('/{id}/skaityti', name: 'app_book_read', requirements: ['id' => '\d+'])]
+    public function read(int $id, BookRepository $bookRepository): Response
+    {
+        // Ieškome knygos pagal ID
+        $book = $bookRepository->find($id);
+
+        // Jei knyga nerasta – grąžiname 404 klaidą
+        if (!$book) {
+            throw $this->createNotFoundException('Knyga nerasta');
+        }
+
+        // Jei knyga neturi skaitymo nuorodos – nukreipiame atgal
+        if (!$book->getContentUrl()) {
+            $this->addFlash('warning', 'Ši knyga dar neturi skaitymo turinio.');
+            return $this->redirectToRoute('app_book_show', ['id' => $id]);
+        }
+
+        // Grąžiname skaitymo šabloną
+        return $this->render('book/read.html.twig', [
+            'book' => $book,
+        ]);
+    }
 }
