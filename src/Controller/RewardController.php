@@ -10,6 +10,8 @@ use App\Repository\RewardRepository;
 use Doctrine\ORM\EntityManagerInterface;
 // Importuojame AbstractController – bazinė kontrolerio klasė
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+// Importuojame Request – HTTP užklausos objektas (CSRF token gavimui)
+use Symfony\Component\HttpFoundation\Request;
 // Importuojame Response – HTTP atsakymo objektas
 use Symfony\Component\HttpFoundation\Response;
 // Importuojame Route – maršrutų atributas
@@ -33,11 +35,19 @@ class RewardController extends AbstractController
     }
 
     // Prizo įsigijimo veiksmas: /prizai/isigyti/{id}
-    #[Route('/isigyti/{id}', name: 'app_reward_claim', requirements: ['id' => '\d+'])]
-    public function claim(int $id, RewardRepository $rewardRepository, EntityManagerInterface $em): Response
+    // Prizo įsigijimo veiksmas: POST /prizai/isigyti/{id} (tik POST metodas su CSRF)
+    #[Route('/isigyti/{id}', name: 'app_reward_claim', requirements: ['id' => '\d+'], methods: ['POST'])]
+    public function claim(int $id, Request $request, RewardRepository $rewardRepository, EntityManagerInterface $em): Response
     {
         // Reikalaujame, kad vartotojas būtų prisijungęs
         $this->denyAccessUnlessGranted('ROLE_USER');
+
+        // Tikriname CSRF tokeną (apsauga nuo kryžminių užklausų klastojimo)
+        $token = $request->request->get('_csrf_token');
+        if (!$this->isCsrfTokenValid('reward_claim_' . $id, $token)) {
+            $this->addFlash('danger', 'Neteisingas saugumo tokenas. Bandykite dar kartą.');
+            return $this->redirectToRoute('app_rewards');
+        }
 
         // Ieškome prizo pagal ID
         $reward = $rewardRepository->find($id);

@@ -15,6 +15,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
     {# Font Awesome ikonų biblioteka (fas fa-book, fas fa-star ir kt.) #}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    {# Favicon – knygos ikona naršyklės skirtuke #}
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>" type="image/svg+xml">
     {# Pagrindinis projekto CSS stilius #}
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
@@ -37,6 +39,7 @@
                 <a href="{{ path('app_books') }}"><i class="fas fa-book"></i> Knygos</a>
                 <a href="{{ path('app_missions') }}"><i class="fas fa-flag"></i> Misijos</a>
                 <a href="{{ path('app_rewards') }}"><i class="fas fa-gift"></i> Prizai</a>
+                <a href="{{ path('app_leaderboard') }}"><i class="fas fa-trophy"></i> Lyderiai</a>
                 {# Jei vartotojas prisijungęs – rodome profilio nuorodas ir taškus #}
                 {% if app.user %}
                     <a href="{{ path('app_profile') }}"><i class="fas fa-user"></i> Profilis</a>
@@ -97,9 +100,9 @@
             <div class="footer-col">
                 <h4>Informacija</h4>
                 <ul>
-                    <li><a href="#">Apie mus</a></li>
-                    <li><a href="#">Kontaktai</a></li>
-                    <li><a href="#">Privatumo politika</a></li>
+                    <li><a href="{{ path('app_about') }}">Apie mus</a></li>
+                    <li><a href="{{ path('app_contacts') }}">Kontaktai</a></li>
+                    <li><a href="{{ path('app_privacy') }}">Privatumo politika</a></li>
                 </ul>
             </div>
         </div>

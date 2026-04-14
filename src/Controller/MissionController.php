@@ -108,6 +108,13 @@ class MissionController extends AbstractController
 
         // Apdorojame POST formą (kai vartotojas paspaudžia „Pateikti")
         if ($request->isMethod('POST')) {
+            // Tikriname CSRF tokeną (apsauga nuo kryžminių užklausų klastojimo)
+            $token = $request->request->get('_csrf_token');
+            if (!$this->isCsrfTokenValid('mission_proof_' . $id, $token)) {
+                $this->addFlash('danger', 'Neteisingas saugumo tokenas. Bandykite dar kartą.');
+                return $this->redirectToRoute('app_missions');
+            }
+
             // Gauname ir apvalome įrodymo tekstą
             $proofText = trim($request->request->get('proof_text', ''));
 

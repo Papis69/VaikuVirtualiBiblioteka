@@ -1,0 +1,74 @@
+{# Paveldime bazinį šabloną #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Privatumo politika – Vaikų Virtuali Biblioteka{% endblock %}
+
+{% block body %}
+<section class="section">
+    <h1 class="page-title"><i class="fas fa-lock"></i> Privatumo politika</h1>
+
+    <div class="static-page-content">
+        <div class="privacy-card">
+            <p class="privacy-updated"><i class="fas fa-calendar-alt"></i> Paskutinį kartą atnaujinta: {{ "now"|date("Y-m-d") }}</p>
+
+            <div class="privacy-section">
+                <h2><i class="fas fa-database"></i> 1. Kokie duomenys renkami?</h2>
+                <p>Registruodamiesi svetainėje jūs pateikiate:</p>
+                <ul>
+                    <li><i class="fas fa-check"></i> Vartotojo vardą</li>
+                    <li><i class="fas fa-check"></i> El. pašto adresą</li>
+                    <li><i class="fas fa-check"></i> Slaptažodį (saugomas užšifruotas)</li>
+                </ul>
+                <p>Taip pat automatiškai renkame informaciją apie jūsų veiklą svetainėje: atliktus misijas, surinktus taškus ir įsigytus prizus.</p>
+            </div>
+
+            <div class="privacy-section">
+                <h2><i class="fas fa-bullseye"></i> 2. Kaip naudojame jūsų duomenis?</h2>
+                <p>Jūsų duomenys naudojami tik šiais tikslais:</p>
+                <ul>
+                    <li><i class="fas fa-check"></i> Vartotojo paskyros sukūrimui ir valdymui</li>
+                    <li><i class="fas fa-check"></i> Taškų, ženkliukų ir prizų sistemos veikimui</li>
+                    <li><i class="fas fa-check"></i> Svetainės funkcionalumo gerinimui</li>
+                </ul>
+                <p>Mes <strong>niekada</strong> neparduodame ir neperduodame jūsų duomenų trečiosioms šalims.</p>
+            </div>
+
+            <div class="privacy-section">
+                <h2><i class="fas fa-shield-alt"></i> 3. Duomenų saugumas</h2>
+                <p>Jūsų slaptažodis saugomas naudojant modernią šifravimo technologiją (bcrypt/argon2). Mes imamės visų protingų priemonių apsaugoti jūsų asmens duomenis nuo neteisėtos prieigos.</p>
+            </div>
+
+            <div class="privacy-section">
+                <h2><i class="fas fa-child"></i> 4. Vaikų privatumas</h2>
+                <p>Mūsų svetainė skirta vaikams, todėl ypač rūpinamės jų privatumu:</p>
+                <ul>
+                    <li><i class="fas fa-check"></i> Nerenkame perteklinės asmeninės informacijos</li>
+                    <li><i class="fas fa-check"></i> Nenaudojame reklamų sekimo (tracking) technologijų</li>
+                    <li><i class="fas fa-check"></i> Tėvai gali bet kada kreiptis dėl vaiko paskyros pašalinimo</li>
+                </ul>
+            </div>
+
+            <div class="privacy-section">
+                <h2><i class="fas fa-cookie-bite"></i> 5. Slapukai (Cookies)</h2>
+                <p>Svetainė naudoja tik techninius slapukus, būtinus prisijungimo sesijai palaikyti. Jokių reklaminių ar analitinių slapukų nenaudojame.</p>
+            </div>
+
+            <div class="privacy-section">
+                <h2><i class="fas fa-user-edit"></i> 6. Jūsų teisės</h2>
+                <p>Pagal BDAR (Bendrąjį duomenų apsaugos reglamentą) jūs turite teisę:</p>
+                <ul>
+                    <li><i class="fas fa-check"></i> Prašyti susipažinti su savo asmens duomenimis</li>
+                    <li><i class="fas fa-check"></i> Prašyti ištaisyti netikslius duomenis</li>
+                    <li><i class="fas fa-check"></i> Prašyti ištrinti savo paskyrą ir visus duomenis</li>
+                    <li><i class="fas fa-check"></i> Pateikti skundą Valstybinei duomenų apsaugos inspekcijai</li>
+                </ul>
+            </div>
+
+            <div class="privacy-section">
+                <h2><i class="fas fa-envelope"></i> 7. Kontaktai</h2>
+                <p>Jei turite klausimų dėl privatumo politikos, kreipkitės el. paštu: <a href="mailto:info@vaikubiblioteka.lt">info@vaikubiblioteka.lt</a></p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

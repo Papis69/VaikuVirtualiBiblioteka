@@ -1,0 +1,80 @@
+{# Paveldime bazinį šabloną #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Apie mus – Vaikų Virtuali Biblioteka{% endblock %}
+
+{% block body %}
+<section class="section">
+    <h1 class="page-title"><i class="fas fa-heart"></i> Apie mus</h1>
+
+    <div class="static-page-content">
+        {# Hero blokas su misija #}
+        <div class="static-hero">
+            <div class="static-hero-icon">
+                <i class="fas fa-book-open fa-3x"></i>
+            </div>
+            <h2>Mūsų misija – skatinti vaikus skaityti!</h2>
+            <p>Vaikų Virtuali Biblioteka yra nemokama internetinė platforma, sukurta padėti vaikams atrasti skaitymo džiaugsmą per žaidybinę patirtį.</p>
+        </div>
+
+        {# Vertybių kortelės #}
+        <div class="values-grid">
+            <div class="value-card">
+                <div class="value-icon"><i class="fas fa-book-reader"></i></div>
+                <h3>Nemokamas skaitymas</h3>
+                <p>Siūlome platų viešojo turinio (public domain) knygų pasirinkimą, kurį vaikai gali skaityti bet kada ir bet kur – visiškai nemokamai.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon"><i class="fas fa-gamepad"></i></div>
+                <h3>Žaidybinė patirtis</h3>
+                <p>Misijų sistema, taškų rinkimas ir ženkliukai padeda vaikams likti motyvuotiems ir paverčia skaitymą smagiu nuotykiu.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon"><i class="fas fa-shield-alt"></i></div>
+                <h3>Saugus turinys</h3>
+                <p>Visos knygos yra kruopščiai atrinktos ir tinkamos vaikams. Tėvai gali būti ramūs dėl turinio, kurį jų vaikai skaito.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon"><i class="fas fa-users"></i></div>
+                <h3>Bendruomenė</h3>
+                <p>Kuriame vaikų skaitytojų bendruomenę, kurioje galima dalintis skaitymo patirtimis ir motyvuoti vienam kitą.</p>
+            </div>
+        </div>
+
+        {# Kaip veikia #}
+        <div class="static-section">
+            <h2><i class="fas fa-cogs"></i> Kaip tai veikia?</h2>
+            <div class="steps-list">
+                <div class="step-item">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>Užsiregistruok</h4>
+                        <p>Sukurk nemokamą paskyrą ir prisijunk prie virtualios bibliotekos.</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>Skaityk knygas</h4>
+                        <p>Naršyk knygų katalogą, filtruok pagal amžių ar kategoriją ir skaityk tiesiog naršyklėje.</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>Atlik misijas</h4>
+                        <p>Vykdyk skaitymo misijas ir pateik įrodymus administratoriui patvirtinti.</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h4>Rink taškus ir prizus</h4>
+                        <p>Už atliktus misijas gauk taškus, ženkliukus ir iškeisk juos į prizus!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

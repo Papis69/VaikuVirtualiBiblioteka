@@ -34,6 +34,8 @@
 
                 {# POST forma – siunčia duomenis į app_mission_submit_proof maršrutą #}
                 <form method="post" action="{{ path('app_mission_submit_proof', {id: mission.id}) }}">
+                    {# CSRF apsaugos tokenas #}
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('mission_proof_' ~ mission.id) }}">
                     <div class="form-group">
                         <label for="proof_text"><i class="fas fa-edit"></i> Jūsų įrodymas</label>
                         {# Teksto laukas įrodymui parašyti #}

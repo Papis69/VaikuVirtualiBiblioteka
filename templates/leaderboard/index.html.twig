@@ -1,0 +1,77 @@
+{# Paveldime bazinį šabloną #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Lyderių lentelė – Vaikų Virtuali Biblioteka{% endblock %}
+
+{% block body %}
+<section class="section">
+    <h1 class="page-title"><i class="fas fa-trophy"></i> Lyderių lentelė</h1>
+
+    {# Lyderių header su info #}
+    <div class="leaderboard-header">
+        <h2><i class="fas fa-crown"></i> Geriausi skaitytojai</h2>
+        <p>Top 20 aktyviausi bibliotekos nariai pagal surinktus taškus</p>
+    </div>
+
+    {% if topUsers|length > 0 %}
+        <div class="table-responsive">
+            <table class="leaderboard-table">
+                <thead>
+                    <tr>
+                        <th style="width: 80px; text-align: center;">Vieta</th>
+                        <th>Skaitytojas</th>
+                        <th style="text-align: center;">Taškai</th>
+                        <th style="text-align: center;">Ženkliukai</th>
+                        <th style="text-align: center;">Misijos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in topUsers %}
+                    <tr class="{% if loop.index == 1 %}top-1{% elseif loop.index == 2 %}top-2{% elseif loop.index == 3 %}top-3{% endif %}">
+                        {# Vietos numeris su spalvotu ženkliuku top 3 #}
+                        <td style="text-align: center;">
+                            {% if loop.index == 1 %}
+                                <span class="rank-badge rank-1" title="1 vieta">🥇</span>
+                            {% elseif loop.index == 2 %}
+                                <span class="rank-badge rank-2" title="2 vieta">🥈</span>
+                            {% elseif loop.index == 3 %}
+                                <span class="rank-badge rank-3" title="3 vieta">🥉</span>
+                            {% else %}
+                                <span class="rank-badge rank-other">{{ loop.index }}</span>
+                            {% endif %}
+                        </td>
+                        {# Vartotojo vardas #}
+                        <td>
+                            <div class="leaderboard-user">
+                                <i class="fas fa-user-circle fa-lg"></i>
+                                <strong>{{ user.username }}</strong>
+                            </div>
+                        </td>
+                        {# Taškai #}
+                        <td style="text-align: center;">
+                            <span class="leaderboard-points">
+                                <i class="fas fa-star"></i> {{ user.points }}
+                            </span>
+                        </td>
+                        {# Ženkliukų skaičius #}
+                        <td style="text-align: center;">
+                            <span class="leaderboard-badges">
+                                <i class="fas fa-medal"></i> {{ user.userBadges|length }}
+                            </span>
+                        </td>
+                        {# Atliktų misijų skaičius #}
+                        <td style="text-align: center;">
+                            <span class="leaderboard-badges">
+                                <i class="fas fa-flag"></i> {{ user.userMissions|length }}
+                            </span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="empty-state"><i class="fas fa-users"></i> Kol kas nėra jokių skaitytojų. Registruokitės ir pradėkite skaityti!</p>
+    {% endif %}
+</section>
+{% endblock %}

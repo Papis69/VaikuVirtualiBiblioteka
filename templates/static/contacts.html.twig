@@ -1,0 +1,82 @@
+{# Paveldime bazinį šabloną #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Kontaktai – Vaikų Virtuali Biblioteka{% endblock %}
+
+{% block body %}
+<section class="section">
+    <h1 class="page-title"><i class="fas fa-envelope"></i> Kontaktai</h1>
+
+    <div class="static-page-content">
+        <div class="contacts-grid">
+            {# Kontaktinė informacija #}
+            <div class="contact-info-card">
+                <h2><i class="fas fa-info-circle"></i> Susisiekite su mumis</h2>
+                <p>Turite klausimų, pasiūlymų ar pastebėjimų? Mielai išklausysime!</p>
+
+                <div class="contact-items">
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                        <div>
+                            <h4>El. paštas</h4>
+                            <p>info@vaikubiblioteka.lt</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fas fa-phone"></i></div>
+                        <div>
+                            <h4>Telefonas</h4>
+                            <p>+370 600 00000</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div>
+                            <h4>Adresas</h4>
+                            <p>Vilniaus g. 1, Vilnius, Lietuva</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fas fa-clock"></i></div>
+                        <div>
+                            <h4>Darbo laikas</h4>
+                            <p>Pirmadienis – Penktadienis: 9:00 – 17:00</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {# Kontaktinė forma #}
+            <div class="contact-form-card">
+                <h2><i class="fas fa-paper-plane"></i> Parašykite mums</h2>
+                <form class="contact-form" method="post" onsubmit="event.preventDefault(); alert('Ačiū! Jūsų žinutė išsiųsta.');">
+                    <div class="form-group">
+                        <label for="contact_name"><i class="fas fa-user"></i> Jūsų vardas</label>
+                        <input type="text" id="contact_name" class="form-control" placeholder="Įveskite savo vardą" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact_email"><i class="fas fa-envelope"></i> El. paštas</label>
+                        <input type="email" id="contact_email" class="form-control" placeholder="jusu@pastas.lt" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact_subject"><i class="fas fa-tag"></i> Tema</label>
+                        <select id="contact_subject" class="form-control">
+                            <option value="klausimas">Klausimas</option>
+                            <option value="pasiulymas">Pasiūlymas</option>
+                            <option value="problema">Pranešti apie problemą</option>
+                            <option value="kita">Kita</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact_message"><i class="fas fa-comment"></i> Žinutė</label>
+                        <textarea id="contact_message" class="form-control" rows="5" placeholder="Parašykite savo žinutę..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">
+                        <i class="fas fa-paper-plane"></i> Siųsti žinutę
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
