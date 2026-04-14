@@ -5,7 +5,10 @@
 
 {% block body %}
 <section class="section">
-    <h1 class="page-title"><i class="fas fa-user"></i> Mano profilis</h1>
+    <div class="section-header">
+        <h1 class="page-title"><i class="fas fa-user"></i> Mano profilis</h1>
+        <a href="{{ path('app_profile_edit') }}" class="btn btn-secondary"><i class="fas fa-user-edit"></i> Redaguoti profilį</a>
+    </div>
 
     {# === PROFILIO TINKLELIS === #}
     <div class="profile-grid">

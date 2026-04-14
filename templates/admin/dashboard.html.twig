@@ -39,6 +39,18 @@
                 <span class="pending-count-badge">{{ pendingCount }}</span>
             {% endif %}
         </a>
+        {# Kategorijų valdymo kortelė #}
+        <a href="{{ path('admin_categories') }}" class="admin-nav-card">
+            <i class="fas fa-palette fa-2x"></i>
+            <h3>Kategorijos</h3>
+            <p>Valdyti knygų kategorijas</p>
+        </a>
+        {# Ženkliukų valdymo kortelė #}
+        <a href="{{ path('admin_badges') }}" class="admin-nav-card">
+            <i class="fas fa-medal fa-2x"></i>
+            <h3>Ženkliukai</h3>
+            <p>Valdyti pasiekimų ženkliukus</p>
+        </a>
     </div>
 
     {# === VARTOTOJŲ SĄRAŠO LENTELĖ === #}
