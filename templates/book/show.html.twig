@@ -56,6 +56,21 @@
                     <a href="{{ book.contentUrl }}" target="_blank" class="btn btn-outline">
                         <i class="fas fa-external-link-alt"></i> Atidaryti Project Gutenberg
                     </a>
+                    {# Pažymėti kaip perskaitytą #}
+                    {% if app.user %}
+                        {% if isRead %}
+                            <span class="btn btn-success btn-lg" style="cursor: default; opacity: 0.9;">
+                                <i class="fas fa-check-circle"></i> Perskaityta ✓
+                            </span>
+                        {% else %}
+                            <form method="post" action="{{ path('app_book_mark_read', {id: book.id}) }}" style="margin: 0;">
+                                <input type="hidden" name="_csrf_token" value="{{ csrf_token('mark_read_' ~ book.id) }}">
+                                <button type="submit" class="btn btn-secondary btn-lg">
+                                    <i class="fas fa-bookmark"></i> Pažymėti kaip perskaitytą
+                                </button>
+                            </form>
+                        {% endif %}
+                    {% endif %}
                 </div>
             {% endif %}
         </div>
