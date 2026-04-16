@@ -2,10 +2,16 @@
 // Vardų erdvė – kontrolerių paketas
 namespace App\Controller;
 
+// Importuojame UserBook esybę – knygos perskaitymo įrašas
+use App\Entity\UserBook;
 // Importuojame BookRepository – saugyklą knygų paieškos ir filtravimo operacijoms
 use App\Repository\BookRepository;
 // Importuojame CategoryRepository – saugyklą kategorijų gavimui (filtro select laukui)
 use App\Repository\CategoryRepository;
+// Importuojame UserBookRepository – saugyklą skaitymo būklės tikrinimui
+use App\Repository\UserBookRepository;
+// Importuojame EntityManagerInterface – DB valdytojas
+use Doctrine\ORM\EntityManagerInterface;
 // Importuojame AbstractController – bazinė kontrolerio klasė
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 // Importuojame Request – HTTP užklausos objektas (paieškos parametrų gavimui)
@@ -37,29 +43,34 @@ class BookController extends AbstractController
 
         // Grąžiname šabloną su filtruotomis knygomis ir kategorijomis
         return $this->render('book/index.html.twig', [
-            'books' => $books,                    // Rastos knygos
-            'categories' => $categories,          // Visos kategorijos (filtrui)
-            'search' => $search,                  // Paieškos tekstas (formoje parodymui)
-            'selectedCategory' => $categoryId,    // Pasirinkta kategorija (select aktyviam elementui)
-            'selectedAge' => $age,                // Pasirinktas amžius (select aktyviam elementui)
+            'books' => $books,
+            'categories' => $categories,
+            'search' => $search,
+            'selectedCategory' => $categoryId,
+            'selectedAge' => $age,
         ]);
     }
 
-    // Vienos knygos peržiūros puslapis: /knygos/{id} (pvz., /knygos/5)
-    #[Route('/{id}', name: 'app_book_show', requirements: ['id' => '\d+'])] // \d+ = tik skaičiai
-    public function show(int $id, BookRepository $bookRepository): Response
+    // Vienos knygos peržiūros puslapis: /knygos/{id}
+    #[Route('/{id}', name: 'app_book_show', requirements: ['id' => '\d+'])]
+    public function show(int $id, BookRepository $bookRepository, UserBookRepository $userBookRepository): Response
     {
-        // Ieškome knygos pagal ID
         $book = $bookRepository->find($id);
-
-        // Jei knyga nerasta – grąžiname 404 klaidą
         if (!$book) {
             throw $this->createNotFoundException('Knyga nerasta');
         }
 
-        // Grąžiname knygos detalių šabloną
+        // Tikriname, ar vartotojas jau perskaitė šią knygą
+        $isRead = false;
+        /** @var \App\Entity\User $user */
+        $user = $this->getUser();
+        if ($user) {
+            $isRead = $userBookRepository->hasUserReadBook($user->getId(), $id);
+        }
+
         return $this->render('book/show.html.twig', [
-            'book' => $book, // Perduodame knygos objektą šablonui
+            'book' => $book,
+            'isRead' => $isRead,
         ]);
     }
 
@@ -67,23 +78,55 @@ class BookController extends AbstractController
     #[Route('/{id}/skaityti', name: 'app_book_read', requirements: ['id' => '\d+'])]
     public function read(int $id, BookRepository $bookRepository): Response
     {
-        // Ieškome knygos pagal ID
         $book = $bookRepository->find($id);
-
-        // Jei knyga nerasta – grąžiname 404 klaidą
         if (!$book) {
             throw $this->createNotFoundException('Knyga nerasta');
         }
 
-        // Jei knyga neturi skaitymo nuorodos – nukreipiame atgal
         if (!$book->getContentUrl()) {
             $this->addFlash('warning', 'Ši knyga dar neturi skaitymo turinio.');
             return $this->redirectToRoute('app_book_show', ['id' => $id]);
         }
 
-        // Grąžiname skaitymo šabloną
         return $this->render('book/read.html.twig', [
             'book' => $book,
         ]);
+    }
+
+    // Pažymėti knygą kaip perskaitytą: POST /knygos/{id}/perskaityta
+    #[Route('/{id}/perskaityta', name: 'app_book_mark_read', requirements: ['id' => '\d+'], methods: ['POST'])]
+    public function markAsRead(int $id, Request $request, BookRepository $bookRepository, UserBookRepository $userBookRepository, EntityManagerInterface $em): Response
+    {
+        // Reikalaujame prisijungimo
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
+        // Tikriname CSRF tokeną
+        $token = $request->request->get('_csrf_token');
+        if (!$this->isCsrfTokenValid('mark_read_' . $id, $token)) {
+            $this->addFlash('danger', 'Neteisingas saugumo tokenas.');
+            return $this->redirectToRoute('app_book_show', ['id' => $id]);
+        }
+
+        $book = $bookRepository->find($id);
+        if (!$book) {
+            throw $this->createNotFoundException('Knyga nerasta');
+        }
+
+        /** @var \App\Entity\User $user */
+        $user = $this->getUser();
+
+        // Tikriname, ar dar neperskaityta
+        if (!$userBookRepository->hasUserReadBook($user->getId(), $id)) {
+            $userBook = new UserBook();
+            $userBook->setUser($user);
+            $userBook->setBook($book);
+            $em->persist($userBook);
+            $em->flush();
+            $this->addFlash('success', sprintf('Knyga „%s" pažymėta kaip perskaityta!', $book->getTitle()));
+        } else {
+            $this->addFlash('info', 'Ši knyga jau pažymėta kaip perskaityta.');
+        }
+
+        return $this->redirectToRoute('app_book_show', ['id' => $id]);
     }
 }
