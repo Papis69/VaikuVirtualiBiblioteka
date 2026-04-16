@@ -316,11 +316,11 @@ class AppFixtures extends Fixture
 
         // Prizų duomenys: [pavadinimas, aprašymas, nuotraukos URL, kaina taškais, likutis]
         $rewardsData = [
-            ['Spalvinimo knygelė', 'Graži spalvinimo knygelė su gyvūnais – puikus būdas lavinti kūrybiškumą!', 'https://placehold.co/400x300/FF6B9D/FFFFFF?text=🎨+Spalvinimo+knygelė&font=roboto', 30, 10],
-            ['Lipdukai', 'Rinkinys spalvingų lipdukų su knygų personažais – puoškite sąsiuvinius!', 'https://placehold.co/400x300/6C63FF/FFFFFF?text=⭐+Lipdukai&font=roboto', 20, 20],
-            ['Knyga-dovana', 'Pasirinkite bet kurią knygą iš mūsų katalogo kaip asmeninę dovaną!', 'https://placehold.co/400x300/2ED573/FFFFFF?text=📚+Knyga-dovana&font=roboto', 100, 5],
-            ['Žaisliukas', 'Mažas žaisliukas-staigmena – nežinosi, ką gausi, kol neatidarysi!', 'https://placehold.co/400x300/FFA502/FFFFFF?text=🧸+Žaisliukas&font=roboto', 150, 3],
-            ['Specialus ženkliukas', 'Unikalus aukso ženkliukas – tik išrinktiesiems skaitytojams!', 'https://placehold.co/400x300/00D2FF/FFFFFF?text=👑+Aukso+ženkliukas&font=roboto', 200, 2],
+            ['Spalvinimo knygelė', 'Graži spalvinimo knygelė su gyvūnais – puikus būdas lavinti kūrybiškumą!', '/images/rewards/spalvinimo-knygele.svg', 30, 10],
+            ['Lipdukai', 'Rinkinys spalvingų lipdukų su knygų personažais – puoškite sąsiuvinius!', '/images/rewards/lipdukai.svg', 20, 20],
+            ['Knyga-dovana', 'Pasirinkite bet kurią knygą iš mūsų katalogo kaip asmeninę dovaną!', '/images/rewards/knyga-dovana.svg', 100, 5],
+            ['Žaisliukas', 'Mažas žaisliukas-staigmena – nežinosi, ką gausi, kol neatidarysi!', '/images/rewards/zaisliukas.svg', 150, 3],
+            ['Specialus ženkliukas', 'Unikalus aukso ženkliukas – tik išrinktiesiems skaitytojams!', '/images/rewards/specialus-zenkliukas.svg', 200, 2],
         ];
         // Sukuriame kiekvieną prizą
         foreach ($rewardsData as [$name, $desc, $img, $cost, $stock]) {
