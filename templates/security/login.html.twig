@@ -32,11 +32,11 @@
             {# CSRF apsaugos žetonas (saugumo priemonė prieš kryžminius užklausų klastojimus) #}
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-            {# „Prisiminti mane" varnelė #}
-            <div class="form-group">
-                <label class="checkbox-label">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <label class="checkbox-label" style="margin-bottom: 0;">
                     <input type="checkbox" name="_remember_me"> Prisiminti mane
                 </label>
+                <a href="{{ path('app_forgot_password_request') }}" style="font-size: 0.9rem; color: var(--primary);">Pamiršote slaptažodį?</a>
             </div>
 
             {# Prisijungimo mygtukas #}

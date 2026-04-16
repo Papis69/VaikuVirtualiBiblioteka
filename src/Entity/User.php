@@ -176,6 +176,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removePoints(int $points): static
     {
         $this->points -= $points; // Atimame nuo esamos sumos
+        if ($this->points < 0) {
+            $this->points = 0;
+        }
         return $this;
     }
 
